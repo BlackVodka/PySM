@@ -1,0 +1,110 @@
+\hypertarget{structpySm__stateMachineType}{}\section{py\+Sm\+\_\+state\+Machine\+Type Struct Reference}
+\label{structpySm__stateMachineType}\index{py\+Sm\+\_\+state\+Machine\+Type@{py\+Sm\+\_\+state\+Machine\+Type}}
+
+
+Structure defining a state machine.  
+
+
+
+
+{\ttfamily \#include $<$Py\+Sm.\+h$>$}
+
+
+
+Collaboration diagram for py\+Sm\+\_\+state\+Machine\+Type\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=331pt]{structpySm__stateMachineType__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{structpySm__stateType}{py\+Sm\+\_\+state\+Type} $\ast$ \hyperlink{structpySm__stateMachineType_ac9896d220e5e80df257943742f47f6d0}{entry\+State}
+\item 
+\hyperlink{structpySm__stateType}{py\+Sm\+\_\+state\+Type} $\ast$ \hyperlink{structpySm__stateMachineType_afff58d3fb0afd9064dfccf4f58cdb8b5}{actual\+State}
+\item 
+const \hyperlink{structpySm__stateType}{py\+Sm\+\_\+state\+Type} $\ast$$\ast$ \hyperlink{structpySm__stateMachineType_a6b964357abaeecf851825d1203a59582}{states}
+\item 
+const \hyperlink{PySm__types_8h_a1aff40256c00f194609879f8f6f1e1a1}{py\+Sm\+\_\+uint8} \hyperlink{structpySm__stateMachineType_a8df1d19072975480da4985f99f8ae19e}{number\+Of\+States}
+\item 
+const \hyperlink{structpySm__stateTransitionType}{py\+Sm\+\_\+state\+Transition\+Type} $\ast$ \hyperlink{structpySm__stateMachineType_a3f35562e1b353b47e2a90a957882a610}{transitions}
+\item 
+const \hyperlink{PySm__types_8h_a1aff40256c00f194609879f8f6f1e1a1}{py\+Sm\+\_\+uint8} \hyperlink{structpySm__stateMachineType_a3d4035a87cce41845ae138aa2a279e20}{number\+Of\+Transitions}
+\item 
+\hyperlink{PySm__types_8h_a368133d64634d66410f3fe1343de6ba3}{py\+Sm\+\_\+bool} \hyperlink{structpySm__stateMachineType_a3320131411f6304cba856edbcfedd060}{run\+Entry\+Of\+Initial\+State\+\_\+b}
+\item 
+const \hyperlink{PySm_8h_acf18fbe39f8464bd70f03199165ef4a2}{py\+Sm\+\_\+state\+Machine\+Reset\+Function} \hyperlink{structpySm__stateMachineType_a37e20b01fecc6d91d5625b0cd10dcfaa}{reset\+Variables}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Structure defining a state machine. 
+
+A state machine is defined by it\textquotesingle{}s
+\begin{DoxyItemize}
+\item entry state \hyperlink{structpySm__stateMachineType_ac9896d220e5e80df257943742f47f6d0}{py\+Sm\+\_\+state\+Machine\+Type\+::entry\+State}
+\item current active state \hyperlink{structpySm__stateMachineType_afff58d3fb0afd9064dfccf4f58cdb8b5}{py\+Sm\+\_\+state\+Machine\+Type\+::actual\+State}
+\item a list of all states, \hyperlink{structpySm__stateMachineType_a6b964357abaeecf851825d1203a59582}{py\+Sm\+\_\+state\+Machine\+Type\+::states} given by an pointer array, pointing to all states of the generated state machine
+\item the overall number of all states \hyperlink{structpySm__stateMachineType_a3d4035a87cce41845ae138aa2a279e20}{py\+Sm\+\_\+state\+Machine\+Type\+::number\+Of\+Transitions}
+\item all existing transitions of the state machine \hyperlink{structpySm__stateMachineType_a3f35562e1b353b47e2a90a957882a610}{py\+Sm\+\_\+state\+Machine\+Type\+::transitions}, given by an pointer to an array, containing the transitions
+\item the overall number of transitions \hyperlink{structpySm__stateMachineType_a3d4035a87cce41845ae138aa2a279e20}{py\+Sm\+\_\+state\+Machine\+Type\+::number\+Of\+Transitions}
+\item a flag \hyperlink{structpySm__stateMachineType_a3320131411f6304cba856edbcfedd060}{py\+Sm\+\_\+state\+Machine\+Type\+::run\+Entry\+Of\+Initial\+State\+\_\+b}, enabling the execution of the on\+Entry-\/function of the first, initial state (entry\+State). This flag get\textquotesingle{}s generated as T\+R\+UE when the entry\+State has an on\+Entry statement
+\item a function py\+Sm\+\_\+state\+Machine\+Reset\+Function\+::reset\+Variables for resetting the state machine\textquotesingle{}s local variables 
+\end{DoxyItemize}
+
+\subsection{Field Documentation}
+\mbox{\Hypertarget{structpySm__stateMachineType_afff58d3fb0afd9064dfccf4f58cdb8b5}\label{structpySm__stateMachineType_afff58d3fb0afd9064dfccf4f58cdb8b5}} 
+\index{py\+Sm\+\_\+state\+Machine\+Type@{py\+Sm\+\_\+state\+Machine\+Type}!actual\+State@{actual\+State}}
+\index{actual\+State@{actual\+State}!py\+Sm\+\_\+state\+Machine\+Type@{py\+Sm\+\_\+state\+Machine\+Type}}
+\subsubsection{\texorpdfstring{actual\+State}{actualState}}
+{\footnotesize\ttfamily \hyperlink{structpySm__stateType}{py\+Sm\+\_\+state\+Type}$\ast$ py\+Sm\+\_\+state\+Machine\+Type\+::actual\+State}
+
+\mbox{\Hypertarget{structpySm__stateMachineType_ac9896d220e5e80df257943742f47f6d0}\label{structpySm__stateMachineType_ac9896d220e5e80df257943742f47f6d0}} 
+\index{py\+Sm\+\_\+state\+Machine\+Type@{py\+Sm\+\_\+state\+Machine\+Type}!entry\+State@{entry\+State}}
+\index{entry\+State@{entry\+State}!py\+Sm\+\_\+state\+Machine\+Type@{py\+Sm\+\_\+state\+Machine\+Type}}
+\subsubsection{\texorpdfstring{entry\+State}{entryState}}
+{\footnotesize\ttfamily const \hyperlink{structpySm__stateType}{py\+Sm\+\_\+state\+Type}$\ast$ py\+Sm\+\_\+state\+Machine\+Type\+::entry\+State}
+
+\mbox{\Hypertarget{structpySm__stateMachineType_a8df1d19072975480da4985f99f8ae19e}\label{structpySm__stateMachineType_a8df1d19072975480da4985f99f8ae19e}} 
+\index{py\+Sm\+\_\+state\+Machine\+Type@{py\+Sm\+\_\+state\+Machine\+Type}!number\+Of\+States@{number\+Of\+States}}
+\index{number\+Of\+States@{number\+Of\+States}!py\+Sm\+\_\+state\+Machine\+Type@{py\+Sm\+\_\+state\+Machine\+Type}}
+\subsubsection{\texorpdfstring{number\+Of\+States}{numberOfStates}}
+{\footnotesize\ttfamily const \hyperlink{PySm__types_8h_a1aff40256c00f194609879f8f6f1e1a1}{py\+Sm\+\_\+uint8} py\+Sm\+\_\+state\+Machine\+Type\+::number\+Of\+States}
+
+\mbox{\Hypertarget{structpySm__stateMachineType_a3d4035a87cce41845ae138aa2a279e20}\label{structpySm__stateMachineType_a3d4035a87cce41845ae138aa2a279e20}} 
+\index{py\+Sm\+\_\+state\+Machine\+Type@{py\+Sm\+\_\+state\+Machine\+Type}!number\+Of\+Transitions@{number\+Of\+Transitions}}
+\index{number\+Of\+Transitions@{number\+Of\+Transitions}!py\+Sm\+\_\+state\+Machine\+Type@{py\+Sm\+\_\+state\+Machine\+Type}}
+\subsubsection{\texorpdfstring{number\+Of\+Transitions}{numberOfTransitions}}
+{\footnotesize\ttfamily const \hyperlink{PySm__types_8h_a1aff40256c00f194609879f8f6f1e1a1}{py\+Sm\+\_\+uint8} py\+Sm\+\_\+state\+Machine\+Type\+::number\+Of\+Transitions}
+
+\mbox{\Hypertarget{structpySm__stateMachineType_a37e20b01fecc6d91d5625b0cd10dcfaa}\label{structpySm__stateMachineType_a37e20b01fecc6d91d5625b0cd10dcfaa}} 
+\index{py\+Sm\+\_\+state\+Machine\+Type@{py\+Sm\+\_\+state\+Machine\+Type}!reset\+Variables@{reset\+Variables}}
+\index{reset\+Variables@{reset\+Variables}!py\+Sm\+\_\+state\+Machine\+Type@{py\+Sm\+\_\+state\+Machine\+Type}}
+\subsubsection{\texorpdfstring{reset\+Variables}{resetVariables}}
+{\footnotesize\ttfamily const \hyperlink{PySm_8h_acf18fbe39f8464bd70f03199165ef4a2}{py\+Sm\+\_\+state\+Machine\+Reset\+Function} py\+Sm\+\_\+state\+Machine\+Type\+::reset\+Variables}
+
+\mbox{\Hypertarget{structpySm__stateMachineType_a3320131411f6304cba856edbcfedd060}\label{structpySm__stateMachineType_a3320131411f6304cba856edbcfedd060}} 
+\index{py\+Sm\+\_\+state\+Machine\+Type@{py\+Sm\+\_\+state\+Machine\+Type}!run\+Entry\+Of\+Initial\+State\+\_\+b@{run\+Entry\+Of\+Initial\+State\+\_\+b}}
+\index{run\+Entry\+Of\+Initial\+State\+\_\+b@{run\+Entry\+Of\+Initial\+State\+\_\+b}!py\+Sm\+\_\+state\+Machine\+Type@{py\+Sm\+\_\+state\+Machine\+Type}}
+\subsubsection{\texorpdfstring{run\+Entry\+Of\+Initial\+State\+\_\+b}{runEntryOfInitialState\_b}}
+{\footnotesize\ttfamily \hyperlink{PySm__types_8h_a368133d64634d66410f3fe1343de6ba3}{py\+Sm\+\_\+bool} py\+Sm\+\_\+state\+Machine\+Type\+::run\+Entry\+Of\+Initial\+State\+\_\+b}
+
+\mbox{\Hypertarget{structpySm__stateMachineType_a6b964357abaeecf851825d1203a59582}\label{structpySm__stateMachineType_a6b964357abaeecf851825d1203a59582}} 
+\index{py\+Sm\+\_\+state\+Machine\+Type@{py\+Sm\+\_\+state\+Machine\+Type}!states@{states}}
+\index{states@{states}!py\+Sm\+\_\+state\+Machine\+Type@{py\+Sm\+\_\+state\+Machine\+Type}}
+\subsubsection{\texorpdfstring{states}{states}}
+{\footnotesize\ttfamily const \hyperlink{structpySm__stateType}{py\+Sm\+\_\+state\+Type}$\ast$$\ast$ py\+Sm\+\_\+state\+Machine\+Type\+::states}
+
+\mbox{\Hypertarget{structpySm__stateMachineType_a3f35562e1b353b47e2a90a957882a610}\label{structpySm__stateMachineType_a3f35562e1b353b47e2a90a957882a610}} 
+\index{py\+Sm\+\_\+state\+Machine\+Type@{py\+Sm\+\_\+state\+Machine\+Type}!transitions@{transitions}}
+\index{transitions@{transitions}!py\+Sm\+\_\+state\+Machine\+Type@{py\+Sm\+\_\+state\+Machine\+Type}}
+\subsubsection{\texorpdfstring{transitions}{transitions}}
+{\footnotesize\ttfamily const \hyperlink{structpySm__stateTransitionType}{py\+Sm\+\_\+state\+Transition\+Type}$\ast$ py\+Sm\+\_\+state\+Machine\+Type\+::transitions}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+L\+I\+B/\hyperlink{PySm_8h}{Py\+Sm.\+h}\end{DoxyCompactItemize}

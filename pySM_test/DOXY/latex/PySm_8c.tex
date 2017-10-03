@@ -1,0 +1,120 @@
+\hypertarget{PySm_8c}{}\section{L\+I\+B/\+Py\+Sm.c File Reference}
+\label{PySm_8c}\index{L\+I\+B/\+Py\+Sm.\+c@{L\+I\+B/\+Py\+Sm.\+c}}
+
+
+File containing the main implementation of the py\+SM A\+PI and internal functions.  
+
+
+{\ttfamily \#include \char`\"{}Py\+Sm.\+h\char`\"{}}\newline
+Include dependency graph for Py\+Sm.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=166pt]{PySm_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ff}{py\+Sm\+\_\+return\+Type} \hyperlink{PySm_8c_ae2ee66c8ec089cbd4bf9bb64b876241d}{Py\+Sm\+\_\+check\+State} (const \hyperlink{structpySm__stateMachineType}{py\+Sm\+\_\+state\+Machine\+Type} $\ast$state\+Machine, const \hyperlink{structpySm__stateType}{py\+Sm\+\_\+state\+Type} $\ast$state\+To\+Check)
+\begin{DoxyCompactList}\small\item\em Checks a state of a given state machine. \end{DoxyCompactList}\item 
+\hyperlink{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ff}{py\+Sm\+\_\+return\+Type} \hyperlink{PySm_8c_ada20de83c4f6830d43987e68c86ba8f5}{Py\+Sm\+\_\+run\+State\+Machine} (\hyperlink{structpySm__stateMachineType}{py\+Sm\+\_\+state\+Machine\+Type} $\ast$state\+Machine)
+\begin{DoxyCompactList}\small\item\em Runs the given state machine. \end{DoxyCompactList}\item 
+\hyperlink{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ff}{py\+Sm\+\_\+return\+Type} \hyperlink{PySm_8c_a78b95f410fec8c7bf67ee6c38631bea7}{Py\+Sm\+\_\+reset\+State\+Machine} (\hyperlink{structpySm__stateMachineType}{py\+Sm\+\_\+state\+Machine\+Type} $\ast$state\+Machine)
+\begin{DoxyCompactList}\small\item\em Resets the given state machine. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+File containing the main implementation of the py\+SM A\+PI and internal functions. 
+
+\begin{DoxyAuthor}{Author}
+Markus Burger 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2017-\/09-\/11 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{PySm_8c_ae2ee66c8ec089cbd4bf9bb64b876241d}\label{PySm_8c_ae2ee66c8ec089cbd4bf9bb64b876241d}} 
+\index{Py\+Sm.\+c@{Py\+Sm.\+c}!Py\+Sm\+\_\+check\+State@{Py\+Sm\+\_\+check\+State}}
+\index{Py\+Sm\+\_\+check\+State@{Py\+Sm\+\_\+check\+State}!Py\+Sm.\+c@{Py\+Sm.\+c}}
+\subsubsection{\texorpdfstring{Py\+Sm\+\_\+check\+State()}{PySm\_checkState()}}
+{\footnotesize\ttfamily static \hyperlink{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ff}{py\+Sm\+\_\+return\+Type} Py\+Sm\+\_\+check\+State (\begin{DoxyParamCaption}\item[{const \hyperlink{structpySm__stateMachineType}{py\+Sm\+\_\+state\+Machine\+Type} $\ast$}]{state\+Machine,  }\item[{const \hyperlink{structpySm__stateType}{py\+Sm\+\_\+state\+Type} $\ast$}]{state\+To\+Check }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Checks a state of a given state machine. 
+
+Checks, if a given state exists in a given state machine 
+\begin{DoxyCode}
+\hyperlink{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ff}{pySm\_returnType} out = pySm\_checkState(&stateMachine, &stateToCheck);
+\end{DoxyCode}
+ 
+\begin{DoxyParams}{Parameters}
+{\em state\+Machine} & State machine object \\
+\hline
+{\em state\+To\+Check} & State to check if existing in {\ttfamily state\+Machine} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns either P\+Y\+S\+M\+\_\+\+E\+\_\+\+U\+N\+K\+N\+O\+W\+N\+\_\+\+S\+T\+A\+TE when the given state doesn\textquotesingle{}t exist in {\ttfamily state\+Machine} or P\+Y\+S\+M\+\_\+\+E\+\_\+\+OK 
+\end{DoxyReturn}
+\mbox{\Hypertarget{PySm_8c_a78b95f410fec8c7bf67ee6c38631bea7}\label{PySm_8c_a78b95f410fec8c7bf67ee6c38631bea7}} 
+\index{Py\+Sm.\+c@{Py\+Sm.\+c}!Py\+Sm\+\_\+reset\+State\+Machine@{Py\+Sm\+\_\+reset\+State\+Machine}}
+\index{Py\+Sm\+\_\+reset\+State\+Machine@{Py\+Sm\+\_\+reset\+State\+Machine}!Py\+Sm.\+c@{Py\+Sm.\+c}}
+\subsubsection{\texorpdfstring{Py\+Sm\+\_\+reset\+State\+Machine()}{PySm\_resetStateMachine()}}
+{\footnotesize\ttfamily \hyperlink{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ff}{py\+Sm\+\_\+return\+Type} Py\+Sm\+\_\+reset\+State\+Machine (\begin{DoxyParamCaption}\item[{\hyperlink{structpySm__stateMachineType}{py\+Sm\+\_\+state\+Machine\+Type} $\ast$}]{state\+Machine }\end{DoxyParamCaption})}
+
+
+
+Resets the given state machine. 
+
+Resets the given state machine back to initial state and resets the state machine\textquotesingle{}s local variables back to their initial values 
+\begin{DoxyCode}
+\hyperlink{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ff}{pySm\_returnType} out = pySm\_resetStateMachine(&stateMachine);
+\end{DoxyCode}
+ 
+\begin{DoxyParams}{Parameters}
+{\em state\+Machine} & State machine object to reset \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns either P\+Y\+S\+M\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+M\+A\+C\+H\+I\+NE when an invalid state\+Machine has been given or P\+Y\+S\+M\+\_\+\+E\+\_\+\+OK 
+\end{DoxyReturn}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{PySm_8c_a78b95f410fec8c7bf67ee6c38631bea7_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{PySm_8c_ada20de83c4f6830d43987e68c86ba8f5}\label{PySm_8c_ada20de83c4f6830d43987e68c86ba8f5}} 
+\index{Py\+Sm.\+c@{Py\+Sm.\+c}!Py\+Sm\+\_\+run\+State\+Machine@{Py\+Sm\+\_\+run\+State\+Machine}}
+\index{Py\+Sm\+\_\+run\+State\+Machine@{Py\+Sm\+\_\+run\+State\+Machine}!Py\+Sm.\+c@{Py\+Sm.\+c}}
+\subsubsection{\texorpdfstring{Py\+Sm\+\_\+run\+State\+Machine()}{PySm\_runStateMachine()}}
+{\footnotesize\ttfamily \hyperlink{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ff}{py\+Sm\+\_\+return\+Type} Py\+Sm\+\_\+run\+State\+Machine (\begin{DoxyParamCaption}\item[{\hyperlink{structpySm__stateMachineType}{py\+Sm\+\_\+state\+Machine\+Type} $\ast$}]{state\+Machine }\end{DoxyParamCaption})}
+
+
+
+Runs the given state machine. 
+
+Executes the given state machine 
+\begin{DoxyCode}
+\hyperlink{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ff}{pySm\_returnType} out = pySm\_runStateMachine(&stateMachine);
+\end{DoxyCode}
+ 
+\begin{DoxyParams}{Parameters}
+{\em state\+Machine} & State machine object to run \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns either P\+Y\+S\+M\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+M\+A\+C\+H\+I\+NE when an invalid statemachine has been given or P\+Y\+S\+M\+\_\+\+E\+\_\+\+OK 
+\end{DoxyReturn}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{PySm_8c_ada20de83c4f6830d43987e68c86ba8f5_cgraph}
+\end{center}
+\end{figure}

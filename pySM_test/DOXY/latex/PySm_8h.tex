@@ -1,0 +1,217 @@
+\hypertarget{PySm_8h}{}\section{L\+I\+B/\+Py\+Sm.h File Reference}
+\label{PySm_8h}\index{L\+I\+B/\+Py\+Sm.\+h@{L\+I\+B/\+Py\+Sm.\+h}}
+
+
+File containing typedefs and extern callable function declarations.  
+
+
+{\ttfamily \#include \char`\"{}Py\+Sm\+\_\+\+Cfg.\+h\char`\"{}}\newline
+Include dependency graph for Py\+Sm.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=166pt]{PySm_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=334pt]{PySm_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structpySm__stateType}{py\+Sm\+\_\+state\+Type}
+\begin{DoxyCompactList}\small\item\em Structure defining a state. \end{DoxyCompactList}\item 
+struct \hyperlink{structpySm__stateTransitionType}{py\+Sm\+\_\+state\+Transition\+Type}
+\begin{DoxyCompactList}\small\item\em Structure defining a state transition. \end{DoxyCompactList}\item 
+struct \hyperlink{structpySm__stateMachineType}{py\+Sm\+\_\+state\+Machine\+Type}
+\begin{DoxyCompactList}\small\item\em Structure defining a state machine. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef void($\ast$ \hyperlink{PySm_8h_a4f768845ccbe1d4a74cabced29df0c9f}{py\+Sm\+\_\+state\+Function}) (void)
+\begin{DoxyCompactList}\small\item\em Function pointer definition for state functions. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{PySm_8h_acf18fbe39f8464bd70f03199165ef4a2}{py\+Sm\+\_\+state\+Machine\+Reset\+Function}) (void)
+\begin{DoxyCompactList}\small\item\em Function pointer definition for state machine reset functions. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{PySm_8h_ac67ca0ce02947dc3f915629091327717}{py\+Sm\+\_\+transition\+Action\+Function}) (void)
+\begin{DoxyCompactList}\small\item\em Function pointer definition for state transition functions. \end{DoxyCompactList}\item 
+typedef \hyperlink{PySm__types_8h_a368133d64634d66410f3fe1343de6ba3}{py\+Sm\+\_\+bool}($\ast$ \hyperlink{PySm_8h_aeedbab67e9dba20efba287fbe3515e43}{py\+Sm\+\_\+transition\+Test\+Function}) (void)
+\begin{DoxyCompactList}\small\item\em Function pointer definition for state transition test functions. \end{DoxyCompactList}\item 
+typedef \hyperlink{PySm__types_8h_a1aff40256c00f194609879f8f6f1e1a1}{py\+Sm\+\_\+uint8} \hyperlink{PySm_8h_ae3950be0321f85684919c1c5e0c3fba1}{py\+Sm\+\_\+transition\+Priority\+Type}
+\begin{DoxyCompactList}\small\item\em Type for transition priorities. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ff}{py\+Sm\+\_\+return\+Type} \{ \hyperlink{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ffac9cd51f7be16280426493d5285bad96a}{P\+Y\+S\+M\+\_\+\+E\+\_\+\+OK} = 0u, 
+\hyperlink{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ffab6285a1e8c2112c1d895805a6da392ed}{P\+Y\+S\+M\+\_\+\+E\+\_\+\+U\+N\+K\+N\+O\+W\+N\+\_\+\+S\+T\+A\+TE}, 
+\hyperlink{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ffa15946f57e2fbab7637db1bcd3105c5c7}{P\+Y\+S\+M\+\_\+\+E\+\_\+\+U\+N\+K\+N\+O\+W\+N\+\_\+\+T\+R\+A\+N\+S\+I\+T\+I\+ON}, 
+\hyperlink{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ffa23b317ace925bfad0ac732a6f3f1a810}{P\+Y\+S\+M\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+M\+A\+C\+H\+I\+NE}
+ \}\begin{DoxyCompactList}\small\item\em Return type for the py\+SM librarie\textquotesingle{}s A\+PI functions. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ff}{py\+Sm\+\_\+return\+Type} \hyperlink{PySm_8h_ada20de83c4f6830d43987e68c86ba8f5}{Py\+Sm\+\_\+run\+State\+Machine} (\hyperlink{structpySm__stateMachineType}{py\+Sm\+\_\+state\+Machine\+Type} $\ast$state\+Machine)
+\begin{DoxyCompactList}\small\item\em Runs the given state machine. \end{DoxyCompactList}\item 
+\hyperlink{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ff}{py\+Sm\+\_\+return\+Type} \hyperlink{PySm_8h_a78b95f410fec8c7bf67ee6c38631bea7}{Py\+Sm\+\_\+reset\+State\+Machine} (\hyperlink{structpySm__stateMachineType}{py\+Sm\+\_\+state\+Machine\+Type} $\ast$state\+Machine)
+\begin{DoxyCompactList}\small\item\em Resets the given state machine. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+File containing typedefs and extern callable function declarations. 
+
+\begin{DoxyAuthor}{Author}
+Markus Burger 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2017-\/09-\/11 
+\end{DoxyDate}
+
+
+\subsection{Typedef Documentation}
+\mbox{\Hypertarget{PySm_8h_a4f768845ccbe1d4a74cabced29df0c9f}\label{PySm_8h_a4f768845ccbe1d4a74cabced29df0c9f}} 
+\index{Py\+Sm.\+h@{Py\+Sm.\+h}!py\+Sm\+\_\+state\+Function@{py\+Sm\+\_\+state\+Function}}
+\index{py\+Sm\+\_\+state\+Function@{py\+Sm\+\_\+state\+Function}!Py\+Sm.\+h@{Py\+Sm.\+h}}
+\subsubsection{\texorpdfstring{py\+Sm\+\_\+state\+Function}{pySm\_stateFunction}}
+{\footnotesize\ttfamily typedef void($\ast$ py\+Sm\+\_\+state\+Function) (void)}
+
+
+
+Function pointer definition for state functions. 
+
+\mbox{\Hypertarget{PySm_8h_acf18fbe39f8464bd70f03199165ef4a2}\label{PySm_8h_acf18fbe39f8464bd70f03199165ef4a2}} 
+\index{Py\+Sm.\+h@{Py\+Sm.\+h}!py\+Sm\+\_\+state\+Machine\+Reset\+Function@{py\+Sm\+\_\+state\+Machine\+Reset\+Function}}
+\index{py\+Sm\+\_\+state\+Machine\+Reset\+Function@{py\+Sm\+\_\+state\+Machine\+Reset\+Function}!Py\+Sm.\+h@{Py\+Sm.\+h}}
+\subsubsection{\texorpdfstring{py\+Sm\+\_\+state\+Machine\+Reset\+Function}{pySm\_stateMachineResetFunction}}
+{\footnotesize\ttfamily typedef void($\ast$ py\+Sm\+\_\+state\+Machine\+Reset\+Function) (void)}
+
+
+
+Function pointer definition for state machine reset functions. 
+
+This function get\textquotesingle{}s generated and is used to reset state machine local internal static variables. This function normally get\textquotesingle{}s called only when resetting a whole state machine by the according A\+PI function. \mbox{\Hypertarget{PySm_8h_ac67ca0ce02947dc3f915629091327717}\label{PySm_8h_ac67ca0ce02947dc3f915629091327717}} 
+\index{Py\+Sm.\+h@{Py\+Sm.\+h}!py\+Sm\+\_\+transition\+Action\+Function@{py\+Sm\+\_\+transition\+Action\+Function}}
+\index{py\+Sm\+\_\+transition\+Action\+Function@{py\+Sm\+\_\+transition\+Action\+Function}!Py\+Sm.\+h@{Py\+Sm.\+h}}
+\subsubsection{\texorpdfstring{py\+Sm\+\_\+transition\+Action\+Function}{pySm\_transitionActionFunction}}
+{\footnotesize\ttfamily typedef void($\ast$ py\+Sm\+\_\+transition\+Action\+Function) (void)}
+
+
+
+Function pointer definition for state transition functions. 
+
+These functions get called (if generated/needed) to perform given actions when a transition gets triggered and executed. \mbox{\Hypertarget{PySm_8h_ae3950be0321f85684919c1c5e0c3fba1}\label{PySm_8h_ae3950be0321f85684919c1c5e0c3fba1}} 
+\index{Py\+Sm.\+h@{Py\+Sm.\+h}!py\+Sm\+\_\+transition\+Priority\+Type@{py\+Sm\+\_\+transition\+Priority\+Type}}
+\index{py\+Sm\+\_\+transition\+Priority\+Type@{py\+Sm\+\_\+transition\+Priority\+Type}!Py\+Sm.\+h@{Py\+Sm.\+h}}
+\subsubsection{\texorpdfstring{py\+Sm\+\_\+transition\+Priority\+Type}{pySm\_transitionPriorityType}}
+{\footnotesize\ttfamily typedef \hyperlink{PySm__types_8h_a1aff40256c00f194609879f8f6f1e1a1}{py\+Sm\+\_\+uint8} \hyperlink{PySm_8h_ae3950be0321f85684919c1c5e0c3fba1}{py\+Sm\+\_\+transition\+Priority\+Type}}
+
+
+
+Type for transition priorities. 
+
+\mbox{\Hypertarget{PySm_8h_aeedbab67e9dba20efba287fbe3515e43}\label{PySm_8h_aeedbab67e9dba20efba287fbe3515e43}} 
+\index{Py\+Sm.\+h@{Py\+Sm.\+h}!py\+Sm\+\_\+transition\+Test\+Function@{py\+Sm\+\_\+transition\+Test\+Function}}
+\index{py\+Sm\+\_\+transition\+Test\+Function@{py\+Sm\+\_\+transition\+Test\+Function}!Py\+Sm.\+h@{Py\+Sm.\+h}}
+\subsubsection{\texorpdfstring{py\+Sm\+\_\+transition\+Test\+Function}{pySm\_transitionTestFunction}}
+{\footnotesize\ttfamily typedef \hyperlink{PySm__types_8h_a368133d64634d66410f3fe1343de6ba3}{py\+Sm\+\_\+bool}($\ast$ py\+Sm\+\_\+transition\+Test\+Function) (void)}
+
+
+
+Function pointer definition for state transition test functions. 
+
+These functions get called to perform the evaluation of the transition condition. 
+
+\subsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ff}\label{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ff}} 
+\index{Py\+Sm.\+h@{Py\+Sm.\+h}!py\+Sm\+\_\+return\+Type@{py\+Sm\+\_\+return\+Type}}
+\index{py\+Sm\+\_\+return\+Type@{py\+Sm\+\_\+return\+Type}!Py\+Sm.\+h@{Py\+Sm.\+h}}
+\subsubsection{\texorpdfstring{py\+Sm\+\_\+return\+Type}{pySm\_returnType}}
+{\footnotesize\ttfamily enum \hyperlink{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ff}{py\+Sm\+\_\+return\+Type}}
+
+
+
+Return type for the py\+SM librarie\textquotesingle{}s A\+PI functions. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P\+Y\+S\+M\+\_\+\+E\+\_\+\+OK@{P\+Y\+S\+M\+\_\+\+E\+\_\+\+OK}!Py\+Sm.\+h@{Py\+Sm.\+h}}\index{Py\+Sm.\+h@{Py\+Sm.\+h}!P\+Y\+S\+M\+\_\+\+E\+\_\+\+OK@{P\+Y\+S\+M\+\_\+\+E\+\_\+\+OK}}}\mbox{\Hypertarget{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ffac9cd51f7be16280426493d5285bad96a}\label{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ffac9cd51f7be16280426493d5285bad96a}} 
+P\+Y\+S\+M\+\_\+\+E\+\_\+\+OK&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P\+Y\+S\+M\+\_\+\+E\+\_\+\+U\+N\+K\+N\+O\+W\+N\+\_\+\+S\+T\+A\+TE@{P\+Y\+S\+M\+\_\+\+E\+\_\+\+U\+N\+K\+N\+O\+W\+N\+\_\+\+S\+T\+A\+TE}!Py\+Sm.\+h@{Py\+Sm.\+h}}\index{Py\+Sm.\+h@{Py\+Sm.\+h}!P\+Y\+S\+M\+\_\+\+E\+\_\+\+U\+N\+K\+N\+O\+W\+N\+\_\+\+S\+T\+A\+TE@{P\+Y\+S\+M\+\_\+\+E\+\_\+\+U\+N\+K\+N\+O\+W\+N\+\_\+\+S\+T\+A\+TE}}}\mbox{\Hypertarget{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ffab6285a1e8c2112c1d895805a6da392ed}\label{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ffab6285a1e8c2112c1d895805a6da392ed}} 
+P\+Y\+S\+M\+\_\+\+E\+\_\+\+U\+N\+K\+N\+O\+W\+N\+\_\+\+S\+T\+A\+TE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P\+Y\+S\+M\+\_\+\+E\+\_\+\+U\+N\+K\+N\+O\+W\+N\+\_\+\+T\+R\+A\+N\+S\+I\+T\+I\+ON@{P\+Y\+S\+M\+\_\+\+E\+\_\+\+U\+N\+K\+N\+O\+W\+N\+\_\+\+T\+R\+A\+N\+S\+I\+T\+I\+ON}!Py\+Sm.\+h@{Py\+Sm.\+h}}\index{Py\+Sm.\+h@{Py\+Sm.\+h}!P\+Y\+S\+M\+\_\+\+E\+\_\+\+U\+N\+K\+N\+O\+W\+N\+\_\+\+T\+R\+A\+N\+S\+I\+T\+I\+ON@{P\+Y\+S\+M\+\_\+\+E\+\_\+\+U\+N\+K\+N\+O\+W\+N\+\_\+\+T\+R\+A\+N\+S\+I\+T\+I\+ON}}}\mbox{\Hypertarget{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ffa15946f57e2fbab7637db1bcd3105c5c7}\label{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ffa15946f57e2fbab7637db1bcd3105c5c7}} 
+P\+Y\+S\+M\+\_\+\+E\+\_\+\+U\+N\+K\+N\+O\+W\+N\+\_\+\+T\+R\+A\+N\+S\+I\+T\+I\+ON&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P\+Y\+S\+M\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+M\+A\+C\+H\+I\+NE@{P\+Y\+S\+M\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+M\+A\+C\+H\+I\+NE}!Py\+Sm.\+h@{Py\+Sm.\+h}}\index{Py\+Sm.\+h@{Py\+Sm.\+h}!P\+Y\+S\+M\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+M\+A\+C\+H\+I\+NE@{P\+Y\+S\+M\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+M\+A\+C\+H\+I\+NE}}}\mbox{\Hypertarget{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ffa23b317ace925bfad0ac732a6f3f1a810}\label{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ffa23b317ace925bfad0ac732a6f3f1a810}} 
+P\+Y\+S\+M\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+M\+A\+C\+H\+I\+NE&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{PySm_8h_a78b95f410fec8c7bf67ee6c38631bea7}\label{PySm_8h_a78b95f410fec8c7bf67ee6c38631bea7}} 
+\index{Py\+Sm.\+h@{Py\+Sm.\+h}!Py\+Sm\+\_\+reset\+State\+Machine@{Py\+Sm\+\_\+reset\+State\+Machine}}
+\index{Py\+Sm\+\_\+reset\+State\+Machine@{Py\+Sm\+\_\+reset\+State\+Machine}!Py\+Sm.\+h@{Py\+Sm.\+h}}
+\subsubsection{\texorpdfstring{Py\+Sm\+\_\+reset\+State\+Machine()}{PySm\_resetStateMachine()}}
+{\footnotesize\ttfamily \hyperlink{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ff}{py\+Sm\+\_\+return\+Type} Py\+Sm\+\_\+reset\+State\+Machine (\begin{DoxyParamCaption}\item[{\hyperlink{structpySm__stateMachineType}{py\+Sm\+\_\+state\+Machine\+Type} $\ast$}]{state\+Machine }\end{DoxyParamCaption})}
+
+
+
+Resets the given state machine. 
+
+Resets the given state machine back to initial state and resets the state machine\textquotesingle{}s local variables back to their initial values 
+\begin{DoxyCode}
+\hyperlink{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ff}{pySm\_returnType} out = pySm\_resetStateMachine(&stateMachine);
+\end{DoxyCode}
+ 
+\begin{DoxyParams}{Parameters}
+{\em state\+Machine} & State machine object to reset \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns either P\+Y\+S\+M\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+M\+A\+C\+H\+I\+NE when an invalid state\+Machine has been given or P\+Y\+S\+M\+\_\+\+E\+\_\+\+OK 
+\end{DoxyReturn}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{PySm_8h_a78b95f410fec8c7bf67ee6c38631bea7_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{PySm_8h_ada20de83c4f6830d43987e68c86ba8f5}\label{PySm_8h_ada20de83c4f6830d43987e68c86ba8f5}} 
+\index{Py\+Sm.\+h@{Py\+Sm.\+h}!Py\+Sm\+\_\+run\+State\+Machine@{Py\+Sm\+\_\+run\+State\+Machine}}
+\index{Py\+Sm\+\_\+run\+State\+Machine@{Py\+Sm\+\_\+run\+State\+Machine}!Py\+Sm.\+h@{Py\+Sm.\+h}}
+\subsubsection{\texorpdfstring{Py\+Sm\+\_\+run\+State\+Machine()}{PySm\_runStateMachine()}}
+{\footnotesize\ttfamily \hyperlink{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ff}{py\+Sm\+\_\+return\+Type} Py\+Sm\+\_\+run\+State\+Machine (\begin{DoxyParamCaption}\item[{\hyperlink{structpySm__stateMachineType}{py\+Sm\+\_\+state\+Machine\+Type} $\ast$}]{state\+Machine }\end{DoxyParamCaption})}
+
+
+
+Runs the given state machine. 
+
+Executes the given state machine 
+\begin{DoxyCode}
+\hyperlink{PySm_8h_a1bd760b7300136bf7e0bd7b9e3a126ff}{pySm\_returnType} out = pySm\_runStateMachine(&stateMachine);
+\end{DoxyCode}
+ 
+\begin{DoxyParams}{Parameters}
+{\em state\+Machine} & State machine object to run \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns either P\+Y\+S\+M\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+M\+A\+C\+H\+I\+NE when an invalid statemachine has been given or P\+Y\+S\+M\+\_\+\+E\+\_\+\+OK 
+\end{DoxyReturn}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{PySm_8h_ada20de83c4f6830d43987e68c86ba8f5_cgraph}
+\end{center}
+\end{figure}

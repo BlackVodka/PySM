@@ -1,0 +1,83 @@
+\hypertarget{structpySm__stateTransitionType}{}\section{py\+Sm\+\_\+state\+Transition\+Type Struct Reference}
+\label{structpySm__stateTransitionType}\index{py\+Sm\+\_\+state\+Transition\+Type@{py\+Sm\+\_\+state\+Transition\+Type}}
+
+
+Structure defining a state transition.  
+
+
+
+
+{\ttfamily \#include $<$Py\+Sm.\+h$>$}
+
+
+
+Collaboration diagram for py\+Sm\+\_\+state\+Transition\+Type\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=236pt]{structpySm__stateTransitionType__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{structpySm__stateType}{py\+Sm\+\_\+state\+Type} $\ast$ \hyperlink{structpySm__stateTransitionType_adb9a41fd9d60f064fabaa74ef2698bd7}{source\+State}
+\item 
+const \hyperlink{structpySm__stateType}{py\+Sm\+\_\+state\+Type} $\ast$ \hyperlink{structpySm__stateTransitionType_aeff05523d3e91571e745460314e46116}{destination\+State}
+\item 
+const \hyperlink{PySm_8h_aeedbab67e9dba20efba287fbe3515e43}{py\+Sm\+\_\+transition\+Test\+Function} \hyperlink{structpySm__stateTransitionType_ab3a3cb53af27cfedcc63edb36d5f7639}{transition\+Test}
+\item 
+const \hyperlink{PySm_8h_ae3950be0321f85684919c1c5e0c3fba1}{py\+Sm\+\_\+transition\+Priority\+Type} \hyperlink{structpySm__stateTransitionType_a0c95a5a437e65155d1100d3016f9575f}{transition\+Priority}
+\item 
+const \hyperlink{PySm_8h_ac67ca0ce02947dc3f915629091327717}{py\+Sm\+\_\+transition\+Action\+Function} \hyperlink{structpySm__stateTransitionType_a02fc12242851c7d129808a4e81cf1b78}{transition\+Action}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Structure defining a state transition. 
+
+A state transition is defined by it\textquotesingle{}s
+\begin{DoxyItemize}
+\item source \hyperlink{structpySm__stateTransitionType_adb9a41fd9d60f064fabaa74ef2698bd7}{py\+Sm\+\_\+state\+Transition\+Type\+::source\+State} and
+\item destination state \hyperlink{structpySm__stateTransitionType_aeff05523d3e91571e745460314e46116}{py\+Sm\+\_\+state\+Transition\+Type\+::destination\+State} ,
+\item it\textquotesingle{}s transition condition py\+Sm\+\_\+\+State\+Transition\+Type\+::transition\+Test (given by the transition test function) ,
+\item the transitions priority \hyperlink{structpySm__stateTransitionType_a0c95a5a437e65155d1100d3016f9575f}{py\+Sm\+\_\+state\+Transition\+Type\+::transition\+Priority}
+\item and actions to be performed, if an transition has been triggered, given by the transition action function \hyperlink{structpySm__stateTransitionType_a02fc12242851c7d129808a4e81cf1b78}{py\+Sm\+\_\+state\+Transition\+Type\+::transition\+Action} 
+\end{DoxyItemize}
+
+\subsection{Field Documentation}
+\mbox{\Hypertarget{structpySm__stateTransitionType_aeff05523d3e91571e745460314e46116}\label{structpySm__stateTransitionType_aeff05523d3e91571e745460314e46116}} 
+\index{py\+Sm\+\_\+state\+Transition\+Type@{py\+Sm\+\_\+state\+Transition\+Type}!destination\+State@{destination\+State}}
+\index{destination\+State@{destination\+State}!py\+Sm\+\_\+state\+Transition\+Type@{py\+Sm\+\_\+state\+Transition\+Type}}
+\subsubsection{\texorpdfstring{destination\+State}{destinationState}}
+{\footnotesize\ttfamily const \hyperlink{structpySm__stateType}{py\+Sm\+\_\+state\+Type}$\ast$ py\+Sm\+\_\+state\+Transition\+Type\+::destination\+State}
+
+\mbox{\Hypertarget{structpySm__stateTransitionType_adb9a41fd9d60f064fabaa74ef2698bd7}\label{structpySm__stateTransitionType_adb9a41fd9d60f064fabaa74ef2698bd7}} 
+\index{py\+Sm\+\_\+state\+Transition\+Type@{py\+Sm\+\_\+state\+Transition\+Type}!source\+State@{source\+State}}
+\index{source\+State@{source\+State}!py\+Sm\+\_\+state\+Transition\+Type@{py\+Sm\+\_\+state\+Transition\+Type}}
+\subsubsection{\texorpdfstring{source\+State}{sourceState}}
+{\footnotesize\ttfamily const \hyperlink{structpySm__stateType}{py\+Sm\+\_\+state\+Type}$\ast$ py\+Sm\+\_\+state\+Transition\+Type\+::source\+State}
+
+\mbox{\Hypertarget{structpySm__stateTransitionType_a02fc12242851c7d129808a4e81cf1b78}\label{structpySm__stateTransitionType_a02fc12242851c7d129808a4e81cf1b78}} 
+\index{py\+Sm\+\_\+state\+Transition\+Type@{py\+Sm\+\_\+state\+Transition\+Type}!transition\+Action@{transition\+Action}}
+\index{transition\+Action@{transition\+Action}!py\+Sm\+\_\+state\+Transition\+Type@{py\+Sm\+\_\+state\+Transition\+Type}}
+\subsubsection{\texorpdfstring{transition\+Action}{transitionAction}}
+{\footnotesize\ttfamily const \hyperlink{PySm_8h_ac67ca0ce02947dc3f915629091327717}{py\+Sm\+\_\+transition\+Action\+Function} py\+Sm\+\_\+state\+Transition\+Type\+::transition\+Action}
+
+\mbox{\Hypertarget{structpySm__stateTransitionType_a0c95a5a437e65155d1100d3016f9575f}\label{structpySm__stateTransitionType_a0c95a5a437e65155d1100d3016f9575f}} 
+\index{py\+Sm\+\_\+state\+Transition\+Type@{py\+Sm\+\_\+state\+Transition\+Type}!transition\+Priority@{transition\+Priority}}
+\index{transition\+Priority@{transition\+Priority}!py\+Sm\+\_\+state\+Transition\+Type@{py\+Sm\+\_\+state\+Transition\+Type}}
+\subsubsection{\texorpdfstring{transition\+Priority}{transitionPriority}}
+{\footnotesize\ttfamily const \hyperlink{PySm_8h_ae3950be0321f85684919c1c5e0c3fba1}{py\+Sm\+\_\+transition\+Priority\+Type} py\+Sm\+\_\+state\+Transition\+Type\+::transition\+Priority}
+
+\mbox{\Hypertarget{structpySm__stateTransitionType_ab3a3cb53af27cfedcc63edb36d5f7639}\label{structpySm__stateTransitionType_ab3a3cb53af27cfedcc63edb36d5f7639}} 
+\index{py\+Sm\+\_\+state\+Transition\+Type@{py\+Sm\+\_\+state\+Transition\+Type}!transition\+Test@{transition\+Test}}
+\index{transition\+Test@{transition\+Test}!py\+Sm\+\_\+state\+Transition\+Type@{py\+Sm\+\_\+state\+Transition\+Type}}
+\subsubsection{\texorpdfstring{transition\+Test}{transitionTest}}
+{\footnotesize\ttfamily const \hyperlink{PySm_8h_aeedbab67e9dba20efba287fbe3515e43}{py\+Sm\+\_\+transition\+Test\+Function} py\+Sm\+\_\+state\+Transition\+Type\+::transition\+Test}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+L\+I\+B/\hyperlink{PySm_8h}{Py\+Sm.\+h}\end{DoxyCompactItemize}
