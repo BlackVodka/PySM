@@ -1,0 +1,387 @@
+Started logging So 01 Okt 2017 17:02:22 CEST
+********************************************* GENERATION STARTED *********************************************
+[Info] No code generation header specified, will use the default one: defaultCodeHeader.txt
+[Info] Started parsing given input graphml file:
+/home/markus/Projekte/SM_Generator/pySM/tests_diagrams/developer_coffee_example/developer_coffee_example.graphml
+[Info] Finished parsing graphml file, found 5 states, 4 configuration blocks, 9 transitions
+[Info] Started processing the state texts
+****************************************** BEGIN DEBUG INFORMATION *******************************************
+dbg_parsedStates 
+
+[{'is_init_state': False,
+  'list_of_text_lines': ['entry:',
+                         'coffeein_level_ui8 = 99u;',
+                         'during:',
+                         'coffeein_level_ui8++;',
+                         'exit:',
+                         'productivity_ui8 = 100u;'],
+  'node_id': 'n0',
+  'state_name': 'BREAKFAST'},
+ {'is_init_state': False,
+  'list_of_text_lines': ['during:',
+                         'developer_is_productive_HA_b = PYSM_TRUE;',
+                         'current_hour_ui8++;',
+                         'coffeein_level_ui8 -= 25;'],
+  'node_id': 'n1',
+  'state_name': 'IN_OFFICE'},
+ {'is_init_state': False,
+  'list_of_text_lines': ['entry:',
+                         'coffeein_level_ui8 = 100u;',
+                         'developer_is_productive_HA_b = PYSM_FALSE;'],
+  'node_id': 'n2',
+  'state_name': 'GET_COFFEE'},
+ {'is_init_state': True,
+  'list_of_text_lines': ['entry:',
+                         'developer_is_productive_HA_b = PYSM_FALSE;',
+                         'during:',
+                         'current_hour_ui8++;',
+                         'if(current_hour_ui8 >= 24)',
+                         '{',
+                         '    current_hour_ui8 -= 24;',
+                         '}'],
+  'node_id': 'n5',
+  'state_name': 'RELAX_AND_SLEEP'},
+ {'is_init_state': False,
+  'list_of_text_lines': ['during:',
+                         'coffeein_level_ui8 = 0u;',
+                         'productivity_ui8 = 0u;',
+                         'developer_is_productive_HA_b = PYSM_FALSE;'],
+  'node_id': 'n10',
+  'state_name': 'DEVELOPER_IS_ILL'}]
+
+
+
+dbg_parsedConfig 
+
+{'cfgInSigLines': ['pySm_bool developer_is_ill_HA_b;',
+                   'pySm_uint8 another_input_ui8;'],
+ 'cfgOutSigLines': ['pySm_bool developer_is_productive_HA_b;',
+                    'pySm_uint16 and_another_output_ui16;'],
+ 'cfgPreprocessorLines': ['#define WORKTIME_PER_DAY_H 8',
+                          "#define WAKE_UP_TIME_H 6 /* stand up at 6 o'clock "
+                          '*/',
+                          '#define GO_HOME_TIME '
+                          '(WORKTIME_PER_DAY_H+WAKE_UP_TIME_H)'],
+ 'cfgVarLines': ['pySm_uint8 coffeein_level_ui8 = 0u;',
+                 'pySm_uint8 productivity_ui8 = 0u;',
+                 'pySm_uint8 current_hour_ui8 = 0u;']}
+
+
+
+dbg_parsedTransitions 
+
+[{'edge_id': 'e0',
+  'sourceNode': 'n1',
+  'targetNode': 'n1',
+  'transitionTextLines': ['<3> [productivity_ui8 > (pySm_uint8)0u]',
+                          '{productivity_ui8--;}']},
+ {'edge_id': 'e1',
+  'sourceNode': 'n0',
+  'targetNode': 'n1',
+  'transitionTextLines': ['<2> [coffeein_level_ui8 >= 100u]']},
+ {'edge_id': 'e2',
+  'sourceNode': 'n1',
+  'targetNode': 'n2',
+  'transitionTextLines': ['<2> [coffeein_level_ui8 == 0u]']},
+ {'edge_id': 'e3',
+  'sourceNode': 'n2',
+  'targetNode': 'n1',
+  'transitionTextLines': ['{current_hour_ui8++;', 'productivity_ui8 = 100u;}']},
+ {'edge_id': 'e4',
+  'sourceNode': 'n1',
+  'targetNode': 'n5',
+  'transitionTextLines': ['<1> [current_hour_ui8 >= GO_HOME_TIME]',
+                          '{productivity_ui8 = 0u;}']},
+ {'edge_id': 'e5',
+  'sourceNode': 'n5',
+  'targetNode': 'n0',
+  'transitionTextLines': ['<2> [current_hour_ui8 >= WAKE_UP_TIME_H]',
+                          '{coffeein_level_ui8 = 0u;}']},
+ {'edge_id': 'e6',
+  'sourceNode': 'n0',
+  'targetNode': 'n10',
+  'transitionTextLines': ['<1> [developer_is_ill_HA_b == PYSM_TRUE]']},
+ {'edge_id': 'e7',
+  'sourceNode': 'n10',
+  'targetNode': 'n0',
+  'transitionTextLines': ['[developer_is_ill_HA_b == PYSM_FALSE]']},
+ {'edge_id': 'e9',
+  'sourceNode': 'n5',
+  'targetNode': 'n0',
+  'transitionTextLines': ['<1> [another_input_ui8 == 42u]']}]
+
+
+
+******************************************* END DEBUG INFORMATION ********************************************
+[Info] Finished processing state texts, found 3 entry, 2 during, 2 exit instruction blocks
+****************************************** BEGIN DEBUG INFORMATION *******************************************
+dbg_processedStates 
+
+[{'is_init_state': False,
+  'list_of_during_instructions': ['coffeein_level_ui8++;'],
+  'list_of_entry_instructions': ['coffeein_level_ui8 = 99u;'],
+  'list_of_exit_instructions': ['productivity_ui8 = 100u;'],
+  'node_id': 'n0',
+  'state_name': 'BREAKFAST'},
+ {'is_init_state': False,
+  'list_of_during_instructions': ['developer_is_productive_HA_b = PYSM_TRUE;',
+                                  'current_hour_ui8++;',
+                                  'coffeein_level_ui8 -= 25;'],
+  'list_of_entry_instructions': None,
+  'list_of_exit_instructions': None,
+  'node_id': 'n1',
+  'state_name': 'IN_OFFICE'},
+ {'is_init_state': False,
+  'list_of_during_instructions': None,
+  'list_of_entry_instructions': ['coffeein_level_ui8 = 100u;',
+                                 'developer_is_productive_HA_b = PYSM_FALSE;'],
+  'list_of_exit_instructions': None,
+  'node_id': 'n2',
+  'state_name': 'GET_COFFEE'},
+ {'is_init_state': True,
+  'list_of_during_instructions': ['current_hour_ui8++;',
+                                  'if(current_hour_ui8 >= 24)',
+                                  '{',
+                                  '    current_hour_ui8 -= 24;',
+                                  '}'],
+  'list_of_entry_instructions': ['developer_is_productive_HA_b = PYSM_FALSE;'],
+  'list_of_exit_instructions': None,
+  'node_id': 'n5',
+  'state_name': 'RELAX_AND_SLEEP'},
+ {'is_init_state': False,
+  'list_of_during_instructions': ['coffeein_level_ui8 = 0u;',
+                                  'productivity_ui8 = 0u;',
+                                  'developer_is_productive_HA_b = PYSM_FALSE;'],
+  'list_of_entry_instructions': None,
+  'list_of_exit_instructions': None,
+  'node_id': 'n10',
+  'state_name': 'DEVELOPER_IS_ILL'}]
+
+
+
+******************************************* END DEBUG INFORMATION ********************************************
+[Info] Started processing the transition texts
+[Info] Transition with edge_id e3 has no explicit priority, assuming 1 (== highest)
+[Info] Transition with edge_id e7 has no explicit priority, assuming 1 (== highest)
+[Info] Finished processing transition texts, found 5 with condition,
+4 with action and 0 without any instruction blocks
+****************************************** BEGIN DEBUG INFORMATION *******************************************
+dbg_processedTransitions 
+
+[{'edge_id': 'e0',
+  'sourceNode': 'n1',
+  'targetNode': 'n1',
+  'transitionAction': ['productivity_ui8--;'],
+  'transitionCondition': ['productivity_ui8 > (pySm_uint8)0u'],
+  'transitionPriority': '3'},
+ {'edge_id': 'e1',
+  'sourceNode': 'n0',
+  'targetNode': 'n1',
+  'transitionAction': None,
+  'transitionCondition': ['coffeein_level_ui8 >= 100u'],
+  'transitionPriority': '2'},
+ {'edge_id': 'e2',
+  'sourceNode': 'n1',
+  'targetNode': 'n2',
+  'transitionAction': None,
+  'transitionCondition': ['coffeein_level_ui8 == 0u'],
+  'transitionPriority': '2'},
+ {'edge_id': 'e3',
+  'sourceNode': 'n2',
+  'targetNode': 'n1',
+  'transitionAction': ['current_hour_ui8++;', 'productivity_ui8 = 100u;'],
+  'transitionCondition': None,
+  'transitionPriority': '1'},
+ {'edge_id': 'e4',
+  'sourceNode': 'n1',
+  'targetNode': 'n5',
+  'transitionAction': ['productivity_ui8 = 0u;'],
+  'transitionCondition': ['current_hour_ui8 >= GO_HOME_TIME'],
+  'transitionPriority': '1'},
+ {'edge_id': 'e5',
+  'sourceNode': 'n5',
+  'targetNode': 'n0',
+  'transitionAction': ['coffeein_level_ui8 = 0u;'],
+  'transitionCondition': ['current_hour_ui8 >= WAKE_UP_TIME_H'],
+  'transitionPriority': '2'},
+ {'edge_id': 'e6',
+  'sourceNode': 'n0',
+  'targetNode': 'n10',
+  'transitionAction': None,
+  'transitionCondition': ['developer_is_ill_HA_b == PYSM_TRUE'],
+  'transitionPriority': '1'},
+ {'edge_id': 'e7',
+  'sourceNode': 'n10',
+  'targetNode': 'n0',
+  'transitionAction': None,
+  'transitionCondition': ['developer_is_ill_HA_b == PYSM_FALSE'],
+  'transitionPriority': '1'},
+ {'edge_id': 'e9',
+  'sourceNode': 'n5',
+  'targetNode': 'n0',
+  'transitionAction': None,
+  'transitionCondition': ['another_input_ui8 == 42u'],
+  'transitionPriority': '1'}]
+
+
+
+******************************************* END DEBUG INFORMATION ********************************************
+[Info] Started processing the confguration texts
+[Info] Finished processing configuration texts, found
+2 input signals, 2 output signals, 3 local variables and 3 lines of preprocessor directives
+****************************************** BEGIN DEBUG INFORMATION *******************************************
+dbg_processedConfigurations 
+
+{'inputSignals': [{'dataType': 'pySm_bool',
+                   'variableName': 'developer_is_ill_HA_b'},
+                  {'dataType': 'pySm_uint8',
+                   'variableName': 'another_input_ui8'}],
+ 'outputSignals': [{'dataType': 'pySm_bool',
+                    'variableName': 'developer_is_productive_HA_b'},
+                   {'dataType': 'pySm_uint16',
+                    'variableName': 'and_another_output_ui16'}],
+ 'preprocessorInstructions': ['#define WORKTIME_PER_DAY_H 8',
+                              '#define WAKE_UP_TIME_H 6 /* stand up at 6 '
+                              "o'clock */",
+                              '#define GO_HOME_TIME '
+                              '(WORKTIME_PER_DAY_H+WAKE_UP_TIME_H)'],
+ 'variables': [{'dataType': 'pySm_uint8',
+                'initialValue': '0u',
+                'variableName': 'coffeein_level_ui8'},
+               {'dataType': 'pySm_uint8',
+                'initialValue': '0u',
+                'variableName': 'productivity_ui8'},
+               {'dataType': 'pySm_uint8',
+                'initialValue': '0u',
+                'variableName': 'current_hour_ui8'}]}
+
+
+
+******************************************* END DEBUG INFORMATION ********************************************
+[Info] Started patching the state texts for appropriate in- and output signal access.
+[Info] Finished patching the state texts.
+Patched 4 states and 4 occurences of in- and output signals
+[Info] Started patching the transition texts for appropriate in- and output signal access.
+[Info] Finished patching the transition texts.
+Patched 3 transitions and 3 occurences of in- and output signals
+****************************************** BEGIN DEBUG INFORMATION *******************************************
+dbg_patchedStates 
+
+[{'is_init_state': False,
+  'list_of_during_instructions': ['coffeein_level_ui8++;'],
+  'list_of_entry_instructions': ['coffeein_level_ui8 = 99u;'],
+  'list_of_exit_instructions': ['productivity_ui8 = 100u;'],
+  'node_id': 'n0',
+  'state_name': 'BREAKFAST'},
+ {'is_init_state': False,
+  'list_of_during_instructions': ['devCoffee_outputSignals->developer_is_productive_HA_b '
+                                  '= PYSM_TRUE;',
+                                  'current_hour_ui8++;',
+                                  'coffeein_level_ui8 -= 25;'],
+  'list_of_entry_instructions': None,
+  'list_of_exit_instructions': None,
+  'node_id': 'n1',
+  'state_name': 'IN_OFFICE'},
+ {'is_init_state': False,
+  'list_of_during_instructions': None,
+  'list_of_entry_instructions': ['coffeein_level_ui8 = 100u;',
+                                 'devCoffee_outputSignals->developer_is_productive_HA_b '
+                                 '= PYSM_FALSE;'],
+  'list_of_exit_instructions': None,
+  'node_id': 'n2',
+  'state_name': 'GET_COFFEE'},
+ {'is_init_state': True,
+  'list_of_during_instructions': ['current_hour_ui8++;',
+                                  'if(current_hour_ui8 >= 24)',
+                                  '{',
+                                  '    current_hour_ui8 -= 24;',
+                                  '}'],
+  'list_of_entry_instructions': ['devCoffee_outputSignals->developer_is_productive_HA_b '
+                                 '= PYSM_FALSE;'],
+  'list_of_exit_instructions': None,
+  'node_id': 'n5',
+  'state_name': 'RELAX_AND_SLEEP'},
+ {'is_init_state': False,
+  'list_of_during_instructions': ['coffeein_level_ui8 = 0u;',
+                                  'productivity_ui8 = 0u;',
+                                  'devCoffee_outputSignals->developer_is_productive_HA_b '
+                                  '= PYSM_FALSE;'],
+  'list_of_entry_instructions': None,
+  'list_of_exit_instructions': None,
+  'node_id': 'n10',
+  'state_name': 'DEVELOPER_IS_ILL'}]
+
+
+
+dbg_patchedTransitions 
+
+[{'edge_id': 'e0',
+  'sourceNode': 'n1',
+  'targetNode': 'n1',
+  'transitionAction': ['productivity_ui8--;'],
+  'transitionCondition': ['productivity_ui8 > (pySm_uint8)0u'],
+  'transitionPriority': '3'},
+ {'edge_id': 'e1',
+  'sourceNode': 'n0',
+  'targetNode': 'n1',
+  'transitionAction': None,
+  'transitionCondition': ['coffeein_level_ui8 >= 100u'],
+  'transitionPriority': '2'},
+ {'edge_id': 'e2',
+  'sourceNode': 'n1',
+  'targetNode': 'n2',
+  'transitionAction': None,
+  'transitionCondition': ['coffeein_level_ui8 == 0u'],
+  'transitionPriority': '2'},
+ {'edge_id': 'e3',
+  'sourceNode': 'n2',
+  'targetNode': 'n1',
+  'transitionAction': ['current_hour_ui8++;', 'productivity_ui8 = 100u;'],
+  'transitionCondition': None,
+  'transitionPriority': '1'},
+ {'edge_id': 'e4',
+  'sourceNode': 'n1',
+  'targetNode': 'n5',
+  'transitionAction': ['productivity_ui8 = 0u;'],
+  'transitionCondition': ['current_hour_ui8 >= GO_HOME_TIME'],
+  'transitionPriority': '1'},
+ {'edge_id': 'e5',
+  'sourceNode': 'n5',
+  'targetNode': 'n0',
+  'transitionAction': ['coffeein_level_ui8 = 0u;'],
+  'transitionCondition': ['current_hour_ui8 >= WAKE_UP_TIME_H'],
+  'transitionPriority': '2'},
+ {'edge_id': 'e6',
+  'sourceNode': 'n0',
+  'targetNode': 'n10',
+  'transitionAction': None,
+  'transitionCondition': ['devCoffee_inputSignals->developer_is_ill_HA_b == '
+                          'PYSM_TRUE'],
+  'transitionPriority': '1'},
+ {'edge_id': 'e7',
+  'sourceNode': 'n10',
+  'targetNode': 'n0',
+  'transitionAction': None,
+  'transitionCondition': ['devCoffee_inputSignals->developer_is_ill_HA_b == '
+                          'PYSM_FALSE'],
+  'transitionPriority': '1'},
+ {'edge_id': 'e9',
+  'sourceNode': 'n5',
+  'targetNode': 'n0',
+  'transitionAction': None,
+  'transitionCondition': ['devCoffee_inputSignals->another_input_ui8 == 42u'],
+  'transitionPriority': '1'}]
+
+
+
+******************************************* END DEBUG INFORMATION ********************************************
+
+[Info] Preperations finished.
+Starting generation...
+
+******************************************** GENERATION FINISHED *********************************************
+
+Files generated:
+DevCoffee.h (/home/markus/Projekte/SM_Generator/pySM/tests_diagrams/developer_coffee_example/DevCoffee.h)
+DevCoffee.c  (/home/markus/Projekte/SM_Generator/pySM/tests_diagrams/developer_coffee_example/DevCoffee.c).
+There were 0 warnings and 0 errors.
