@@ -248,7 +248,7 @@ class PySM_Gen_MainWindowClass(Ui_PySm_MainWindow):
         # Start code generation #
         #########################
         self.logWindow(TS.LOG_WINDOW_INVOKING_GENERATOR)
-        (hFileName, hFullPath) = GenerateHeaderFile(self, processedStates, processedTransitions, processedConfigurations)
+        (hFileName, hFullPath) = GenerateHeaderFile(self, processedStates, processedConfigurations)
         if hFileName is None:
             self.logWindow(TS.LOG_WINDOW_GENERATION_ERROR)
             return

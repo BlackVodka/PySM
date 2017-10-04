@@ -163,7 +163,7 @@ def WriteHeaderTypedefs(self, hFile, states, config):
     # generate states enum typedef
     hFile.write(GEN.GENERATED_FILE_HEADER_DOXYGEN_STATES.format(SM_name))
     hFile.write(GEN.GENERATED_FILE_TYPEDEF_ENUM_OPENING)
-    hFile.write('\t' + SM_name + '_UNINITALIZED_STATE_MACHINE' + ',\n')
+    hFile.write('\t' + SM_name.upper() + '_UNINITALIZED_STATE_MACHINE' + ',\n')
     for state in states:
         hFile.write('\t' + SM_name.upper() + '_' + state['state_name'] + ',\n')
     hFile.write('} ' + SM_name + '_activeStateType' + ';\n\n')

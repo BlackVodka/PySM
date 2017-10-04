@@ -7,9 +7,9 @@
 /**
  * @file DevCoffee.h
  * @author Markus Burger
- * @date 2017-10-01
+ * @date 2017-10-04
  * @brief Header for generated state machine devCoffee
- * Generated 2017-10-01 17:02:39 by PySM - The python state machine generator.
+ * Generated 2017-10-04 18:53:22 by PySM - The python state machine generator.
  */
  
 #ifndef DEVCOFFEE_H_
@@ -61,7 +61,7 @@ typedef struct
 */
 typedef enum
 {
-	devCoffee_UNINITALIZED_STATE_MACHINE,
+	DEVCOFFEE_UNINITALIZED_STATE_MACHINE,
 	DEVCOFFEE_BREAKFAST,
 	DEVCOFFEE_IN_OFFICE,
 	DEVCOFFEE_GET_COFFEE,
