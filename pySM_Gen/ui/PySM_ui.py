@@ -13,7 +13,7 @@ class Ui_PySm_MainWindow(object):
         PySm_MainWindow.setObjectName("PySm_MainWindow")
         PySm_MainWindow.resize(810, 640)
         PySm_MainWindow.setMinimumSize(QtCore.QSize(810, 640))
-        PySm_MainWindow.setMaximumSize(QtCore.QSize(810, 640))
+        PySm_MainWindow.setMaximumSize(QtCore.QSize(1920, 1080))
         self.centralwidget = QtWidgets.QWidget(PySm_MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout_7 = QtWidgets.QGridLayout(self.centralwidget)
