@@ -153,6 +153,8 @@ class PySM_Gen_MainWindowClass(Ui_PySm_MainWindow):
     Also, outputs debug information to GUI's log window.
     """
         self.txtGenerationOutput.clear()
+        self.nOfWarnings = 0
+        self.nOfErrors = 0
         self.logWindow(TS.LOG_WINDOW_GENERATION_STARTED)
         if self.checkInputs() == False:
             self.logWindow(TS.LOG_WINDOW_GENERATION_ERROR)
