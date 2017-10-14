@@ -1,5 +1,6 @@
 # PySM
 
+## I. Introduction
 PySM is a **Py**thon-based **S**tate **M**achine generator, using yEd diagrams (*.graphml) as source.  
 It's based on a static library core written in C and the generated state machine dependend code files.
 
@@ -16,12 +17,12 @@ The main features are:
 The PySM project is based on an idea of a workmate (greeting to Florian Koerfer at this point!) and is inspired by the idea of model-driven development, being able to see and alter easily the behaviour of a program, not needing to take a single look at the generated code.  
 Also, to enable companies to use this work for their projects, I decided to use the LGPLv3 license (for more details, see section **Commercial use**).
 
-## ...and what it can't
+### ...and what it can't
 Other commercial well known code generators have pretty good fixed point support, whereas PySM will fill given code in the diagram just as it is (beside of some basic checks), propably leading finally to compiling errors if the pasted code is wrong.  
 Another point is the debug-ability, other tools provide nice shiny GUIs to debug their diagrams as "what-you-see-is-what-is-happening", whereas you'll have to debug the generated/library code by hand  
 (which shouldn't be much pain due to the code's readability, though).
 
-## How it works
+## II. How it works
 Please see **Detailed documentation** section below for detailed explaination for designing state machine diagrams and using the generator.  
 The generator parses a given yEd diagram (\*.graphml-file), searching for states, configuration blocks and transitions.  
 Only diagram element types describing these objects are processed by the generator, other objects will be ignored (and can be used as e.g. documentation blocks).  
@@ -78,10 +79,47 @@ The library core itself basically does the following:
  +-------------------------------+
 ```
 
-## Getting everything set up
-Todo: explanation of python 3.6 etc.
+## III. Installation / Getting everything set up
+At the moment of writing, PySM uses standard python 3 built-in modules except of PyQt5 for GUI creation.
+Although it has been developed in a python 3.6 environment, it should work in any 3.x env.
+### Linux
+On Linux, depending on your distro, you'll have to install python3 and PyQt5  
+(here in my ArchLinux system called pacman packages python-pyqt5 and python3).  
+Afterwards, you should be able to run the generator by executing
+`python3 /path/to/PySM_Gen.py`.
+### Mac OSX
+As I don't own a Mac, I cannot guide you how to get this running.  
+In theory, everything described for Linux should be valid for OSX, too.
+Anyway, Anaconda is also available for OSX, so propably this is the better option.
+### Windows
+On windows platform I highly recommended using Anaconda for python installation, as it brings per default every modules you'll need.  
+You just need to create a Anaconda python 3 installation (either per default or as a separate anaconda environment) and either start the generator using the anaconda command line, or create a launcher for that, using as  
+**Target** either if you're using the default Anaconda environment  
+`%ComSpec% /k ""C:\Users\xxx\Anaconda3\Scripts\activate.bat" && python PySM_Gen.py""`  
+or if you need to use an explicit Anaconda environment  
+`%ComSpec% /k ""C:\Users\xxx\Anaconda3\Scripts\activate.bat" "C:\Users\xxx\Anaconda3\envs\myEnv" && python PySM_Gen.py""`  
+and setting the property  
+**Start in** to the generator dir (e.g. D:\pySM\pySM_Gen) .  
+Note that of course you'll have to adjust the Anaconda installation path to your system.  
+Also, with the `/k` switch the terminal will stay open, showing python interpreter error output, if any. If you don't like this behaviour, you can change it to `/c`, which will terminate the terminal if the generator execution has been finished/window closed (not recommended).
 
-## Detailed documentation
+Anaconda-Link:  
+[https://www.anaconda.com/download]
+
+## IV. I found a bug, what now?
+Please open up an issue ticket on github about the problem.  
+For better investigation / recreation of the bug, please
+- Provide a debug-enabled generation logfile. Per default, the generator creates a logfile calles PySM_Gen.log in it's dir.  
+Also, please make sure that debug logging is enabled (`__ENABLE_DEBUG__ = True` in PySM_Gen.py)
+- If the generation aborts without an error/warning, most propably one of the python functions crashed with an unhandled exception.  
+In this case, please try to reproduce this behaviour when launching the generator from terminal/cmd and provide the python error traceback in the issue ticket.
+- If possible, please provide a simple example diagram, which provokes the reported problem for easier reproducability here
+
+Also, you're very welcome if you have ideas for new features or changes.
+
+And, if you're familar with python, I'd be very glad if you like to take part in the further development of this project :)
+
+## V. Detailed documentation
 A short note: The library core is documented using Doygen, see pySM_test/DOXY/html/index.html).
 
 ### About the files
@@ -144,10 +182,25 @@ So, if you'd like to use a in- or output signal, you'll just have define them wi
 
 Ignoring any of these rules will either lead to corresponding warnings and/or code generation abort with an error (good), or misbehaving/wrong generated code (bad).
 
-### Using the generator
-ToDo: Explain code generator
+## VI. Using the generator
+Usage of the generator will be explained using the following screenshot of a successful generation:  
+![Alt text](./generator_screenshot.png?raw=true "Title")  
+- [1] Path to state machine's yEd diagram file (\*.graphml); also supports drag & drop
+- [2] Path in which the state machine's source files will be generated. Already existing files will be overwritten; also supports drag & drop of the target folder.  
+Default output is relative to the generator's path a dir called OUT (see also chapter VII)
+- [3] Header prologue file: At the beginning of the generated source files (\*.c, \*.h), a file header will be inserted.  
+Here you can provide e.g. your company's copyright information.
+Default used file is defaultCodeHeader.txt (see also Chapter VII)
+- [4] The author's name; will be used for doygen's `@author` - keyword
+- [5] The state machine name. This will be used for almost every state-machine's internal variable naming and for the input-/output signal typedef naming, as well.  
+Therefore, whitespaces are permitted here, so be sure to use a short, unique name!
+- [6] Start generation
+- [7] Generator's output window.  
+Should contain at least a message about errors or successful code generation.
+If no finishing message a la code generation finished/aborted is shown, most propably you've found a bug =/  
+Please see following up chapter about that.
 
-### Notes / Configurable things
+## VII. Notes / Configurable things
 - Due to the way the library core was coded, the maximum number of transitions leaving a state is limited.  
 The setting for this is a define in pySM_test/LIB/PySm_Cfg.h , called PYSM_MAX_NO_OF_TRANSITIONS_PER_STATE and set to 10 atm., which should be sufficient, though.  
 This limitation is also respected by the code generator, unfortunately set in it's own configuration file, `max_number_of_transitions_per_state` in pySM_Gen/PySM_Cfg.py.
@@ -160,9 +213,12 @@ pySm_bool,pySm_uint8,pySm_int8,pySm_uint16,pySm_int16,pySm_uint32,pySm_int32,pyS
   - default_output_path = 'OUT'  
   - logfile_name = 'PySM_Gen.log'
 
-Besides of the mentioned entries in pySM_Gen/PySM_Cfg.py, it's not recommended to change anything else in this file, unless you really know what you are doing!
+Besides of the mentioned entries in pySM_Gen/PySM_Cfg.py, it's not recommended to change anything else in this file, unless you really know what you are doing!  
+- Different companies have different naming conventions for their code.  
+I use here my personal naming convention, which generates besides of function and file names everything lowercase.  
+If you want to alter this behaviour, the corresponding point in the generator's python files should be easy to find, if you can't, feel free to open an issue ticket for me to help you ;)
 
-## Commercial use
+## VIII. Commercial use
 One important note:  
 I'm neither a lawyer nor an expert in juristic topics, the following may be incorrect or  incomplete.  
 For being sure in commercial using this project, do for yourself some investigations and/or contact a lawyer!
@@ -173,3 +229,9 @@ Due to the nature this project was built, this shouldn't be a problem at all, al
 Long story short: Link the library core as dynamic library (NOT static!) and you should be good to go!
 
 References (German): [http://www.it-rechts-praxis.de/meldungen/Open-Source-Kommerzielle-Nutzung-von-LGPL-Libraries-12]
+
+## IX. Future plans / development progress
+At the moment, I'm quite satisfied with the achieved work and will have a look at bugfixes with the highest priority.  
+For the near future I'm planing to enhance the library core code for pointer/memory protection, finally enabling it to get reviewed and certified for functional safety relevant projects according to ISO 26262 in companies.
+
+Another though I have in my mind for some days is the complete avoidance of yEd and creating a complete own GUI, which would have some benefits as e.g. having some graphical behaviour simulation abilities as known from other commercial products, which is the biggest 'would-like-to-have' feature I'm thinking of for now.
