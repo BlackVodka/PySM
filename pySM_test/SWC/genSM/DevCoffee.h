@@ -7,9 +7,9 @@
 /**
  * @file DevCoffee.h
  * @author Markus Burger
- * @date 2017-10-04
+ * @date 2017-11-04
  * @brief Header for generated state machine devCoffee
- * Generated 2017-10-04 18:53:22 by PySM - The python state machine generator.
+ * Generated 2017-11-04 13:35:48 by PySM - The python state machine generator.
  */
  
 #ifndef DEVCOFFEE_H_

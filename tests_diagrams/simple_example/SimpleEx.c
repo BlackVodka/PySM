@@ -7,9 +7,9 @@
 /**
  * @file SimpleEx.c
  * @author Markus Burger
- * @date 2017-10-04
+ * @date 2017-11-04
  * @brief Header for generated state machine simpleEx
- * Generated 2017-10-04 18:54:53 by PySM - The python state machine generator.
+ * Generated 2017-11-04 13:36:42 by PySM - The python state machine generator.
  */
  
 
@@ -119,7 +119,7 @@ pySm_stateMachineType simpleEx_stateMachine_s =
 /* ========================================================================= */
 /* DE- AND INITALIZATION OF MODULE LOCAL (STATIC) VARIABLES                  */
 /* ========================================================================= */
-static simpleEx_activeStateType simpleEx_activeState = simpleEx_UNINITALIZED_STATE_MACHINE;
+static simpleEx_activeStateType simpleEx_activeState = SIMPLEEX_UNINITALIZED_STATE_MACHINE;
 
 pySm_uint8 local_variable_ui8 = 0u;
 

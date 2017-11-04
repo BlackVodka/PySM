@@ -7,9 +7,9 @@
 /**
  * @file DevCoffee.c
  * @author Markus Burger
- * @date 2017-10-04
+ * @date 2017-11-04
  * @brief Header for generated state machine devCoffee
- * Generated 2017-10-04 18:53:22 by PySM - The python state machine generator.
+ * Generated 2017-11-04 13:35:48 by PySM - The python state machine generator.
  */
  
 
@@ -206,7 +206,7 @@ pySm_stateMachineType devCoffee_stateMachine_s =
 /* ========================================================================= */
 static devCoffee_inputSignalsType* devCoffee_inputSignals;
 static devCoffee_outputSignalsType* devCoffee_outputSignals;
-static devCoffee_activeStateType devCoffee_activeState = devCoffee_UNINITALIZED_STATE_MACHINE;
+static devCoffee_activeStateType devCoffee_activeState = DEVCOFFEE_UNINITALIZED_STATE_MACHINE;
 
 pySm_uint8 coffeein_level_ui8 = 0u;
 pySm_uint8 productivity_ui8 = 0u;

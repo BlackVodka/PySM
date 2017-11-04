@@ -350,7 +350,7 @@ def WriteLocalVariables(self, cFile, config):
     if config['outputSignals'] is not None:
         cFile.write('static ' + SM_name + '_outputSignalsType* ' + SM_name + '_outputSignals' + ';\n')
     # Active state variable
-    cFile.write('static ' + SM_name + '_' + Cfg.lib_activeStateType + ' ' + SM_name + '_activeState' + ' = ' + SM_name + '_UNINITALIZED_STATE_MACHINE' + ';\n')
+    cFile.write('static ' + SM_name + '_' + Cfg.lib_activeStateType + ' ' + SM_name + '_activeState' + ' = ' + SM_name.upper() + '_UNINITALIZED_STATE_MACHINE' + ';\n')
     cFile.write('\n')
     # User variables
     if config['variables'] is not None:
