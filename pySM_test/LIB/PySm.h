@@ -162,7 +162,7 @@ typedef struct
 typedef struct
 {
    const pySm_stateType*                entryState;
-   pySm_stateType*                      actualState;
+   const pySm_stateType*                actualState;
    const pySm_stateType*                (*states);
    const pySm_uint8                     numberOfStates;
    const pySm_stateTransitionType       *transitions;

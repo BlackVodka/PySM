@@ -2,7 +2,7 @@ var searchData=
 [
   ['destinationstate',['destinationState',['../structpySm__stateTransitionType.html#aeff05523d3e91571e745460314e46116',1,'pySm_stateTransitionType']]],
   ['devcoffee_2ec',['DevCoffee.c',['../DevCoffee_8c.html',1,'']]],
-  ['devcoffee_2ed',['DevCoffee.d',['../DevCoffee_8d.html',1,'(Global Namespace)'],['../Devcoffee_8d.html',1,'(Global Namespace)'],['../devCoffee_8d.html',1,'(Global Namespace)']]],
+  ['devcoffee_2ed',['DevCoffee.d',['../DevCoffee_8d.html',1,'']]],
   ['devcoffee_2eh',['DevCoffee.h',['../DevCoffee_8h.html',1,'']]],
   ['devcoffee_5factivestate',['devCoffee_activeState',['../DevCoffee_8c.html#ae0a60a7566081901de7dd4fb2da7b2b2',1,'DevCoffee.c']]],
   ['devcoffee_5factivestatetype',['devCoffee_activeStateType',['../DevCoffee_8h.html#a5590d50a72c7655d28dc92f0531c26dc',1,'DevCoffee.h']]],
@@ -47,7 +47,7 @@ var searchData=
   ['devcoffee_5fttf_5fin_5foffice_5fto_5frelax_5fand_5fsleep',['devCoffee_TTF_IN_OFFICE_to_RELAX_AND_SLEEP',['../DevCoffee_8c.html#a4f153d1f06088c508c71a18eb4c5e1b8',1,'DevCoffee.c']]],
   ['devcoffee_5fttf_5frelax_5fand_5fsleep_5fto_5fbreakfast_5f1',['devCoffee_TTF_RELAX_AND_SLEEP_to_BREAKFAST_1',['../DevCoffee_8c.html#afbc64528ca9f2e5f773722497e92f572',1,'DevCoffee.c']]],
   ['devcoffee_5fttf_5frelax_5fand_5fsleep_5fto_5fbreakfast_5f2',['devCoffee_TTF_RELAX_AND_SLEEP_to_BREAKFAST_2',['../DevCoffee_8c.html#ad46de6ebf46162d3daa8a4c408cd9699',1,'DevCoffee.c']]],
-  ['devcoffee_5funinitalized_5fstate_5fmachine',['devCoffee_UNINITALIZED_STATE_MACHINE',['../DevCoffee_8h.html#a5590d50a72c7655d28dc92f0531c26dca5c79ab73bc31ae6cd575cb28ce078adc',1,'DevCoffee.h']]],
+  ['devcoffee_5funinitalized_5fstate_5fmachine',['DEVCOFFEE_UNINITALIZED_STATE_MACHINE',['../DevCoffee_8h.html#a5590d50a72c7655d28dc92f0531c26dcad0d748a5c4efe0ee38f63b969c7c6b74',1,'DevCoffee.h']]],
   ['devcoffee_5fvariableresetfunction',['devCoffee_variableResetFunction',['../DevCoffee_8c.html#a4b7d09fe3f64bd7fabbe109802f5b2c1',1,'DevCoffee.c']]],
   ['developer_5fis_5fill_5fha_5fb',['developer_is_ill_HA_b',['../structdevCoffee__inputSignalsType.html#ab9063470d37a4246a62bc5437fc8c283',1,'devCoffee_inputSignalsType']]],
   ['developer_5fis_5fproductive_5fha_5fb',['developer_is_productive_HA_b',['../structdevCoffee__outputSignalsType.html#a6fdb1443dc1eba7693a23eef24788d26',1,'devCoffee_outputSignalsType']]]
