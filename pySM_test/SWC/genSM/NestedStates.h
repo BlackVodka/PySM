@@ -5,15 +5,15 @@
  *****************************************************************************/
 
 /**
- * @file SimpleEx.h
+ * @file NestedStates.h
  * @author Markus Burger
- * @date 2017-11-04
- * @brief Header for generated state machine simpleEx
- * Generated 2017-11-04 13:36:42 by PySM - The python state machine generator.
+ * @date 2017-12-24
+ * @brief Header for generated state machine nestedStates
+ * Hand-written test file
  */
  
-#ifndef SIMPLEEX_H_
-#define SIMPLEEX_H_
+#ifndef NESTEDSTATES_H_
+#define NESTEDSTATES_H_
 
 /* ========================================================================= */
 /* INCLUDES                                                                  */
@@ -31,16 +31,51 @@
 /* TYPEDEFS                                                                  */
 /* ========================================================================= */
 /**
+ * @brief Structure defining input signals for state machine
+ * nestedStates
+*/
+typedef struct
+{
+	pySm_bool trigger_a;
+	pySm_bool trigger_b;
+	pySm_bool trigger_c;
+	pySm_bool trigger_d;
+	pySm_bool trigger_e;
+	pySm_bool trigger_f;
+	pySm_bool trigger_g;
+	pySm_bool trigger_h;
+	pySm_bool trigger_i;
+} nestedStates_inputSignalsType;
+
+
+/**
+ * @brief Structure defining output signals for state machine
+ * nestedStates
+*/
+typedef struct
+{
+	pySm_bool testOutput;
+} nestedStates_outputSignalsType;
+
+
+/**
  * @brief Enum for exporting current active state of state machine
  * simpleEx
 */
 typedef enum
 {
-	SIMPLEEX_UNINITALIZED_STATE_MACHINE,
-	SIMPLEEX_state1,
-	SIMPLEEX_state2,
-	SIMPLEEX_state3,
-} simpleEx_activeStateType;
+	NESTEDSTATES_RESERVED_NO_VALID_STATE = -1, /* needs to start with -1 as 0 is the first valid state */
+	NESTEDSTATES_SUP_A,
+	NESTEDSTATES_SUP_B,
+	NESTEDSTATES_SUP_C,
+	NESTEDSTATES_SUP_D,
+	NESTEDSTATES_SUB_A,
+	NESTEDSTATES_SUB_B,
+	NESTEDSTATES_SUB_C,
+	NESTEDSTATES_SUB_D,
+	NESTEDSTATES_SUB_E,
+	NESTEDSTATES_SUB_F
+} nestedStates_activeStateType;
 
 
 /* ========================================================================= */
@@ -50,14 +85,14 @@ typedef enum
  * @brief Main function of the state machine
  * simpleEx
 */
-pySm_returnType SimpleEx_mainFunction(void);
+pySm_returnType NestedStates_mainFunction(nestedStates_inputSignalsType*, nestedStates_outputSignalsType*);
 
 
 /**
  * @brief Main function of the state machine
  * simpleEx
 */
-void SimpleEx_getActiveState(simpleEx_activeStateType*);
+void NestedStates_getActiveState(nestedStates_activeStateType*);
 
 
 #endif /* SIMPLEEX_H_ */

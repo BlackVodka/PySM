@@ -26,13 +26,10 @@
 /* ========================================================================= */
 /* INCLUDES                                                                  */
 /* ========================================================================= */
+#include <NestedStates.h>
 #include "Swc.h"
 
 /* Important: Include the header file of the generated state machine         */
-#include "DevCoffee.h"
-#include "SimpleEx.h"
-
-/* Use your own types here, if you like                                      */
 #include <stdint.h>
 
 /* ========================================================================= */
@@ -43,30 +40,28 @@ void Swc_main(void)
 {
 /* Creation of the state machine input and output signal structs,            */
 /* if necessary                                                              */
-	devCoffee_inputSignalsType swc_devCoffeeInputSignals;
-	devCoffee_outputSignalsType swc_devCoffeeOutputSignals;
+	nestedStates_inputSignalsType swc_nestedStatesInputSignals;
+	nestedStates_outputSignalsType swc_nestedStatesOutputSignals;
 /* If you like to, you can get the current active state                      */
-	devCoffee_activeStateType swc_devCoffeeActiveState;
-	simpleEx_activeStateType swc_simpleExActiveState;
+	nestedStates_activeStateType swc_nestedStatesActiveState;
 
 	uint8_t n = 50;
 
 /* Fill needed input signals with values                                     */
-	swc_devCoffeeInputSignals.developer_is_ill_HA_b = (pySm_bool)0u;
-	swc_devCoffeeInputSignals.another_input_ui8 = 41u;
+	swc_nestedStatesInputSignals.trigger_a = (pySm_bool)PYSM_FALSE;
+	swc_nestedStatesInputSignals.trigger_b = (pySm_bool)PYSM_FALSE;
+	swc_nestedStatesInputSignals.trigger_c = (pySm_bool)PYSM_FALSE;
+	swc_nestedStatesInputSignals.trigger_d = (pySm_bool)PYSM_FALSE;
+	swc_nestedStatesInputSignals.trigger_e = (pySm_bool)PYSM_FALSE;
+	swc_nestedStatesInputSignals.trigger_f = (pySm_bool)PYSM_FALSE;
+	swc_nestedStatesInputSignals.trigger_g = (pySm_bool)PYSM_FALSE;
+	swc_nestedStatesInputSignals.trigger_h = (pySm_bool)PYSM_FALSE;
 
 
 /* Run the state machine n times                                             */
 	for(; n > 0; n--)
 	{
-		DevCoffee_mainFunction(&swc_devCoffeeInputSignals, &swc_devCoffeeOutputSignals);
-		DevCoffee_getActiveState(&swc_devCoffeeActiveState);
-		if(DEVCOFFEE_DEVELOPER_IS_ILL == swc_devCoffeeActiveState)
-		{
-			asm("nop");
-			/* do sth. if developer is ill */
-		}
-		SimpleEx_mainFunction();
-		SimpleEx_getActiveState(&swc_simpleExActiveState);
+		NestedStates_mainFunction(&swc_nestedStatesInputSignals, &swc_nestedStatesOutputSignals);
+		NestedStates_getActiveState(&swc_nestedStatesActiveState);
 	}
 }

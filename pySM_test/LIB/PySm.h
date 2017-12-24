@@ -111,6 +111,8 @@ typedef struct
 	const pySm_stateFunction         onEntryState; /**< OnEntryState-function, if needed. */
 	const pySm_stateFunction         onState;      /**< OnDuringState-function, if needed. */
 	const pySm_stateFunction         onExitState;  /**< OnExitState-function, if needed. */
+	const pySm_int8					 superstateElementNo;
+	const pySm_bool                  isSuperState;
 } pySm_stateType;
 
 
