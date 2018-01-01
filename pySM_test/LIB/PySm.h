@@ -53,6 +53,14 @@ typedef enum
 } pySm_returnType;
 
 
+typedef enum
+{
+   PYSM_NO_SUPERSTATE,
+   PYSM_SUPERSTATE_INACTIVE,
+   PYSM_SUPERSTATE_ACTIVE
+} pySm_superstateStatusType;
+
+
 /**
  * @brief Function pointer definition for state functions.
  */
@@ -111,8 +119,9 @@ typedef struct
 	const pySm_stateFunction         onEntryState; /**< OnEntryState-function, if needed. */
 	const pySm_stateFunction         onState;      /**< OnDuringState-function, if needed. */
 	const pySm_stateFunction         onExitState;  /**< OnExitState-function, if needed. */
-	const pySm_int8					 superstateElementNo;
-	const pySm_bool                  isSuperState;
+	/* TODO: Kommentar. Umweg über Enum-Platz nötig, da im state-typedef kein state-ptr verwendet werden kann (zirkelschluss) */
+	const pySm_int8                  superstateElementNo;
+	pySm_superstateStatusType        superStateStatus;
 } pySm_stateType;
 
 
@@ -167,9 +176,10 @@ typedef struct
    const pySm_stateType*                actualState;
    const pySm_stateType*                (*states);
    const pySm_uint8                     numberOfStates;
+   const pySm_int8                      firstValidStateNo;
    const pySm_stateTransitionType       *transitions;
    const pySm_uint8                     numberOfTransitions;
-   pySm_bool                            runEntryOfInitialState_b;
+   pySm_bool                            runEntryOfInitialState;
    const pySm_stateMachineResetFunction resetVariables;
 } pySm_stateMachineType;
 
