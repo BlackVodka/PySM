@@ -47,12 +47,15 @@ static void PySm_runExitOfSuperstates(
 		const pySm_stateMachineType *stateMachine,
 		const pySm_stateType *stateWithTriggeredExit,
 		const pySm_stateType *targetFinalState);
-static void PySm_exitstate(
-		pySm_stateMachineType *stateMachine,
+static void PySm_exitState(
+		const pySm_stateMachineType *stateMachine,
 		const pySm_stateType *stateToExit,
 		const pySm_stateType *targetState);
 static void PySm_runDuringInstructions(
 		const pySm_stateMachineType *stateMachine);
+static void PySm_enterState(
+		pySm_stateMachineType *stateMachine,
+		const pySm_stateType* stateToEnter);
 
 
 /* ========================================================================= */
@@ -84,7 +87,7 @@ pySm_returnType PySm_runStateMachine(pySm_stateMachineType *stateMachine)
 /* next the during statement gets executed                                   */
         	 if((pySm_bool)PYSM_TRUE == stateMachine->firstRun)
         	 {
-        		 stateMachine->actualState->onEntryState();
+        		 PySm_enterState(stateMachine, stateMachine->states[stateMachine->firstValidStateNo]);
         		 stateMachine->firstRun = (pySm_bool)PYSM_FALSE;
         	 }
         	 else
@@ -109,8 +112,14 @@ pySm_returnType PySm_runStateMachine(pySm_stateMachineType *stateMachine)
         		 /* Check if an exit from current active state has been triggered */
         		 if(PYSM_NULL_PTR != exitingTransition)
         		 {
-        			 PySm_exitstate(stateMachine, stateToTestForExit, exitingTransition->destinationState);
+        			 /* Run transition action function, if any */
+        			 if(PYSM_NULL_PTR != exitingTransition->transitionAction)
+        			 {
+        				 exitingTransition->transitionAction();
+        			 }
+        			 PySm_exitState(stateMachine, stateToTestForExit, exitingTransition->destinationState);
         			 PySm_runDuringInstructions(stateMachine);
+        			 PySm_enterState(stateMachine, exitingTransition->destinationState);
         		 }
         		 else
         		 {
@@ -130,6 +139,8 @@ pySm_returnType PySm_runStateMachine(pySm_stateMachineType *stateMachine)
 pySm_returnType PySm_resetStateMachine(pySm_stateMachineType *stateMachine)
 {
    pySm_returnType returnValue = PYSM_INVALID_MACHINE;
+   pySm_uint8 stateNo = stateMachine->firstValidStateNo;
+   pySm_stateType* statePtr = PYSM_NULL_PTR;
 
 
    if(stateMachine == PYSM_NULL_PTR)
@@ -150,6 +161,12 @@ pySm_returnType PySm_resetStateMachine(pySm_stateMachineType *stateMachine)
          {
         	 stateMachine->resetVariables();
          }
+/* Reset state status enums */
+	for(; stateNo < stateMachine->numberOfStates; stateNo++)
+	{
+		statePtr = (pySm_stateType*)stateMachine->states[stateNo];
+		statePtr->stateStatus = PYSM_STATE_INACTIVE;
+	}
 
          stateMachine->firstRun = (pySm_bool)PYSM_TRUE;
 
@@ -248,13 +265,6 @@ static pySm_stateTransitionType* PySm_findExitingTransition(const pySm_stateMach
 
 				if (transitionTriggered == (pySm_bool)PYSM_TRUE)
 				{
-	/* ========================================================================= */
-	/* Transition action functions will always be executed first, if any         */
-	/* ========================================================================= */
-					if(PYSM_NULL_PTR != stateMachine->transitions[currentTransitionNo].transitionAction)
-					{
-						stateMachine->transitions[currentTransitionNo].transitionAction();
-					}
 					/* Remember which transition evaluated to true for returning */
 					transitionWithTriggeredCondition = (pySm_stateTransitionType*)&stateMachine->transitions[currentTransitionNo];
 					break;
@@ -326,8 +336,8 @@ static void PySm_runExitOfSuperstates(
 }
 
 
-static void PySm_exitstate(
-		pySm_stateMachineType *stateMachine,
+static void PySm_exitState(
+		const pySm_stateMachineType *stateMachine,
 		const pySm_stateType* stateToExit,
 		const pySm_stateType* targetState)
 {
@@ -366,4 +376,58 @@ static void PySm_runDuringInstructions(const pySm_stateMachineType *stateMachine
 		}
 	}
 	while(statePtr->superstateElementNo >= stateMachine->firstValidStateNo);
+}
+
+
+static void PySm_enterState(
+		pySm_stateMachineType *stateMachine,
+		const pySm_stateType* stateToEnter)
+{
+	pySm_stateType* statePtr = (pySm_stateType*)stateToEnter;
+
+	/* This outer do-while-loop ensured running and activating superstates of the target state, beginning */
+	/* from the topmost down to the target state itself */
+	do
+	{
+		/* This while loop searches for the topmost inactive state, beginning from the transition target state */
+		/* Afterwards, it get's activated and the according entry() get's executed */
+		while(statePtr->superstateElementNo >= stateMachine->firstValidStateNo)
+		{
+			/* Check if the found superstate is already activated */
+			if(PYSM_STATE_INACTIVE == stateMachine->states[statePtr->superstateElementNo]->stateStatus)
+			{
+				statePtr = (pySm_stateType*)stateMachine->states[statePtr->superstateElementNo];
+			}
+		}
+
+		if(PYSM_STATE_INACTIVE == statePtr->stateStatus)
+		{
+			/* no check for Nullptr needed, as the entry function will be always generated */
+			statePtr->onEntryState();
+			statePtr->stateStatus = PYSM_STATE_ACTIVE;
+		}
+	}
+	while(statePtr != stateToEnter);
+
+/* =========================================================================
+*	Now we'll need to take care of the fact, that the target state
+*	also might be a superstate with default substates
+* ========================================================================= */
+	if(stateToEnter->superstateElementNo < stateMachine->firstValidStateNo)
+	{
+		/* Target state isn't a superstate, set as current active state */
+		stateMachine->actualState = stateToEnter;
+	}
+	else
+	{
+		statePtr = (pySm_stateType*)stateMachine->states[stateToEnter->defaultSubstateElementNo];
+		do
+		{
+			statePtr->onState();
+			statePtr->stateStatus = PYSM_STATE_ACTIVE;
+			stateMachine->actualState = statePtr;
+			statePtr = (pySm_stateType*)stateMachine->states[statePtr->defaultSubstateElementNo];
+		}
+		while(statePtr->defaultSubstateElementNo >= stateMachine->firstValidStateNo);
+	}
 }
