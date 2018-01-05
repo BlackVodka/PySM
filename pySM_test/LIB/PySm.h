@@ -55,10 +55,10 @@ typedef enum
 
 typedef enum
 {
-   PYSM_NO_SUPERSTATE,
-   PYSM_SUPERSTATE_INACTIVE,
-   PYSM_SUPERSTATE_ACTIVE
-} pySm_superstateStatusType;
+   PYSM_STATE_INACTIVE,
+   PYSM_STATE_ACTIVE
+} pySm_stateStatusType;
+
 
 
 /**
@@ -121,7 +121,8 @@ typedef struct
 	const pySm_stateFunction         onExitState;  /**< OnExitState-function, if needed. */
 	/* TODO: Kommentar. Umweg über Enum-Platz nötig, da im state-typedef kein state-ptr verwendet werden kann (zirkelschluss) */
 	const pySm_int8                  superstateElementNo;
-	pySm_superstateStatusType        superStateStatus;
+	const pySm_int8                  defaultSubstateElementNo;
+	pySm_stateStatusType             stateStatus;
 } pySm_stateType;
 
 
@@ -162,11 +163,9 @@ typedef struct
  * pySm_stateMachineType#transitions, given
  * by an pointer to an array, containing the transitions
  * - the overall number of transitions pySm_stateMachineType#numberOfTransitions
- * - a flag pySm_stateMachineType#runEntryOfInitialState_b,
+ * - a flag pySm_stateMachineType#firstRun,
  * enabling the execution of the onEntry-function of the first,
- * initial state (entryState).
- * This flag get's generated as TRUE when the entryState has an
- * onEntry statement
+ * initial state and the according substates (entryState).
  * - a function pySm_stateMachineResetFunction#resetVariables for resetting
  * the state machine's local variables
  */
@@ -179,7 +178,7 @@ typedef struct
    const pySm_int8                      firstValidStateNo;
    const pySm_stateTransitionType       *transitions;
    const pySm_uint8                     numberOfTransitions;
-   pySm_bool                            runEntryOfInitialState;
+   pySm_bool                            firstRun;
    const pySm_stateMachineResetFunction resetVariables;
 } pySm_stateMachineType;
 

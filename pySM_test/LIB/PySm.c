@@ -36,17 +36,23 @@
 /* ========================================================================= */
 static pySm_returnType PySm_checkState(
 		const pySm_stateMachineType *stateMachine,
-		const pySm_stateType* stateToCheck );
+		const pySm_stateType *stateToCheck );
 static pySm_stateTransitionType* PySm_findExitingTransition(
 		const pySm_stateMachineType *stateMachine,
-		const pySm_stateType* currState );
+		const pySm_stateType *currState );
 static void PySm_runExitOfSubstates(
 		const pySm_stateMachineType *stateMachine,
-		const pySm_stateType* stateWithTriggeredExit );
+		const pySm_stateType *stateWithTriggeredExit );
 static void PySm_runExitOfSuperstates(
 		const pySm_stateMachineType *stateMachine,
-		const pySm_stateType* stateWithTriggeredExit,
-		const pySm_stateType* targetFinalState);
+		const pySm_stateType *stateWithTriggeredExit,
+		const pySm_stateType *targetFinalState);
+static void PySm_exitstate(
+		pySm_stateMachineType *stateMachine,
+		const pySm_stateType *stateToExit,
+		const pySm_stateType *targetState);
+static void PySm_runDuringInstructions(
+		const pySm_stateMachineType *stateMachine);
 
 
 /* ========================================================================= */
@@ -55,8 +61,7 @@ static void PySm_runExitOfSuperstates(
 pySm_returnType PySm_runStateMachine(pySm_stateMachineType *stateMachine)
 {
    pySm_returnType returnValue = PYSM_INVALID_MACHINE;
-   pySm_stateType* stateToTestForExit = stateMachine->actualState;
-   pySm_stateType* transitionTargetFinalState = PYSM_NULL_PTR;
+   const pySm_stateType *stateToTestForExit = stateMachine->actualState;
    pySm_stateTransitionType* exitingTransition = PYSM_NULL_PTR;
 
 
@@ -77,10 +82,10 @@ pySm_returnType PySm_runStateMachine(pySm_stateMachineType *stateMachine)
 /* if/else statement here is needed to ensure a consistent behavior of the   */
 /* state machine (entry-statement gets executed in one cycle and just in the */
 /* next the during statement gets executed                                   */
-        	 if((pySm_bool)PYSM_TRUE == stateMachine->runEntryOfInitialState)
+        	 if((pySm_bool)PYSM_TRUE == stateMachine->firstRun)
         	 {
         		 stateMachine->actualState->onEntryState();
-        		 stateMachine->runEntryOfInitialState = (pySm_bool)PYSM_FALSE;
+        		 stateMachine->firstRun = (pySm_bool)PYSM_FALSE;
         	 }
         	 else
         	 {
@@ -104,23 +109,13 @@ pySm_returnType PySm_runStateMachine(pySm_stateMachineType *stateMachine)
         		 /* Check if an exit from current active state has been triggered */
         		 if(PYSM_NULL_PTR != exitingTransition)
         		 {
-        			 /* Is the state which's transition is responsible for an exit a superstate? */
-        			 if((pySm_bool)PYSM_NO_SUPERSTATE != stateToTestForExit->superStateStatus)
-        			 {
-        				 PySm_runExitOfSubstates(stateMachine, stateToTestForExit);
-        			 }
-        			 /* Get the final transition target on lowest hierarchical level */
-// TODO       			 transitionTargetFinalState = getTransitionTargetFinalState();
-        			 /* Run exit() of exited superstates, if any */
-        			 PySm_runExitOfSuperstates(stateMachine, stateToTestForExit, transitionTargetFinalState);
+        			 PySm_exitstate(stateMachine, stateToTestForExit, exitingTransition->destinationState);
+        			 PySm_runDuringInstructions(stateMachine);
         		 }
         		 else
         		 {
-        			 /* No exit triggered, run current active state, if a during()-function got generated */
-        			 if(PYSM_NULL_PTR != stateMachine->actualState->onState)
-        			 {
-						stateMachine->actualState->onState();
-        			 }
+        			 /* No exit triggered, run current active states, if a during()-function got generated */
+        			 PySm_runDuringInstructions(stateMachine);
         		 }
         	 }
 		}
@@ -155,6 +150,9 @@ pySm_returnType PySm_resetStateMachine(pySm_stateMachineType *stateMachine)
          {
         	 stateMachine->resetVariables();
          }
+
+         stateMachine->firstRun = (pySm_bool)PYSM_TRUE;
+
          returnValue = PYSM_E_OK;
       }
    }
@@ -258,7 +256,7 @@ static pySm_stateTransitionType* PySm_findExitingTransition(const pySm_stateMach
 						stateMachine->transitions[currentTransitionNo].transitionAction();
 					}
 					/* Remember which transition evaluated to true for returning */
-					transitionWithTriggeredCondition = &stateMachine->transitions[currentTransitionNo];
+					transitionWithTriggeredCondition = (pySm_stateTransitionType*)&stateMachine->transitions[currentTransitionNo];
 					break;
 				}
 			}
@@ -279,7 +277,7 @@ static pySm_stateTransitionType* PySm_findExitingTransition(const pySm_stateMach
 
 static void PySm_runExitOfSubstates(const pySm_stateMachineType *stateMachine, const pySm_stateType* stateWithTriggeredExit)
 {
-	pySm_stateType* statePtr = stateMachine->actualState;
+	pySm_stateType *statePtr = (pySm_stateType*)stateMachine->actualState;
 
 	do
 	{
@@ -287,13 +285,12 @@ static void PySm_runExitOfSubstates(const pySm_stateMachineType *stateMachine, c
 		{
 			statePtr->onExitState();
 		}
-		if(statePtr->superStateStatus != PYSM_NO_SUPERSTATE)
-		{
-			statePtr->superStateStatus = PYSM_SUPERSTATE_INACTIVE;
-		}
+
+		statePtr->stateStatus = PYSM_STATE_INACTIVE;
+
 		if(statePtr->superstateElementNo >= stateMachine->firstValidStateNo)
 		{
-			statePtr = stateMachine->states[statePtr->superstateElementNo];
+			statePtr = (pySm_stateType*)stateMachine->states[statePtr->superstateElementNo];
 		}
 	}
 	while(statePtr->superstateElementNo != stateWithTriggeredExit->superstateElementNo);
@@ -305,7 +302,7 @@ static void PySm_runExitOfSuperstates(
 		const pySm_stateType* stateWithTriggeredExit,
 		const pySm_stateType* targetFinalState)
 {
-	pySm_stateType* statePtr = stateWithTriggeredExit;
+	pySm_stateType* statePtr = (pySm_stateType*)stateWithTriggeredExit;
 
 	do
 	{
@@ -314,9 +311,11 @@ static void PySm_runExitOfSuperstates(
 			statePtr->onExitState();
 		}
 
+		statePtr->stateStatus = PYSM_STATE_INACTIVE;
+
 		if(statePtr->superstateElementNo >= stateMachine->firstValidStateNo)
 		{
-			statePtr = stateMachine->states[statePtr->superstateElementNo];
+			statePtr = (pySm_stateType*)stateMachine->states[statePtr->superstateElementNo];
 		}
 		else /* reached topmost hierarchical level, no more exits to run */
 		{
@@ -324,4 +323,47 @@ static void PySm_runExitOfSuperstates(
 		}
 	}
 	while(statePtr->superstateElementNo != targetFinalState->superstateElementNo);
+}
+
+
+static void PySm_exitstate(
+		pySm_stateMachineType *stateMachine,
+		const pySm_stateType* stateToExit,
+		const pySm_stateType* targetState)
+{
+	/* Is the state which's transition is responsible for an exit a superstate? */
+	 if(stateToExit->defaultSubstateElementNo >= stateMachine->firstValidStateNo)
+	 {
+		 PySm_runExitOfSubstates(stateMachine, stateToExit);
+	 }
+	 /* Run exit() of exited superstates, if any */
+	 PySm_runExitOfSuperstates(stateMachine, stateToExit, targetState);
+}
+
+
+static void PySm_runDuringInstructions(const pySm_stateMachineType *stateMachine)
+{
+	const pySm_stateType* statePtr = stateMachine->actualState;
+
+	/* Run active states, beginning with the current active at lowest hierarchy */
+	do{
+		if(PYSM_STATE_ACTIVE == statePtr->stateStatus)
+		{
+			if(PYSM_NULL_PTR != statePtr->onState)
+			{
+				statePtr->onState();
+			}
+			if(statePtr->superstateElementNo >= stateMachine->firstValidStateNo)
+			{
+				/* State has a valid superstate */
+				statePtr = stateMachine->states[statePtr->superstateElementNo];
+			}
+			else
+			{
+				/* Topmost level reached */
+				break;
+			}
+		}
+	}
+	while(statePtr->superstateElementNo >= stateMachine->firstValidStateNo);
 }

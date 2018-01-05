@@ -69,7 +69,8 @@ static const pySm_stateType nestedStates_state_SUP_A =
 		.onState = PYSM_NULL_PTR,
 		.onExitState = PYSM_NULL_PTR,
 		.superstateElementNo = (pySm_int8)NESTEDSTATES_RESERVED_STATE_HAS_NO_SUPERSTATE,
-		.superStateStatus = PYSM_SUPERSTATE_INACTIVE
+		.defaultSubstateElementNo = (pySm_int8)NESTEDSTATES_SUP_B,
+		.stateStatus = PYSM_STATE_INACTIVE
 };
 
 static const pySm_stateType nestedStates_state_SUP_B =
@@ -78,7 +79,8 @@ static const pySm_stateType nestedStates_state_SUP_B =
 		.onState = PYSM_NULL_PTR,
 		.onExitState = PYSM_NULL_PTR,
 		.superstateElementNo = (pySm_int8)NESTEDSTATES_SUP_A,
-		.superStateStatus = PYSM_SUPERSTATE_INACTIVE
+		.defaultSubstateElementNo = (pySm_int8)NESTEDSTATES_SUB_A,
+		.stateStatus = PYSM_STATE_INACTIVE
 };
 
 static const pySm_stateType nestedStates_state_SUP_C =
@@ -87,7 +89,8 @@ static const pySm_stateType nestedStates_state_SUP_C =
 		.onState = PYSM_NULL_PTR,
 		.onExitState = PYSM_NULL_PTR,
 		.superstateElementNo = (pySm_int8)NESTEDSTATES_RESERVED_STATE_HAS_NO_SUPERSTATE,
-		.superStateStatus = PYSM_SUPERSTATE_INACTIVE
+		.defaultSubstateElementNo = (pySm_int8)NESTEDSTATES_SUP_D,
+		.stateStatus = PYSM_STATE_INACTIVE
 };
 
 static const pySm_stateType nestedStates_state_SUP_D =
@@ -96,7 +99,8 @@ static const pySm_stateType nestedStates_state_SUP_D =
 		.onState = PYSM_NULL_PTR,
 		.onExitState = PYSM_NULL_PTR,
 		.superstateElementNo = (pySm_int8)NESTEDSTATES_SUP_C,
-		.superStateStatus = PYSM_SUPERSTATE_INACTIVE
+		.defaultSubstateElementNo = (pySm_int8)NESTEDSTATES_SUB_D,
+		.stateStatus = PYSM_STATE_INACTIVE
 };
 
 static const pySm_stateType nestedStates_state_SUB_A =
@@ -105,7 +109,8 @@ static const pySm_stateType nestedStates_state_SUB_A =
 		.onState = nestedStates_SF_SUB_A,
 		.onExitState = PYSM_NULL_PTR,
 		.superstateElementNo = (pySm_int8)NESTEDSTATES_SUP_B,
-		.superStateStatus = PYSM_NO_SUPERSTATE
+		.defaultSubstateElementNo = (pySm_int8)NESTEDSTATES_RESERVED_STATE_HAS_NO_SUBSTATE,
+		.stateStatus = PYSM_STATE_INACTIVE
 };
 
 static const pySm_stateType nestedStates_state_SUB_B =
@@ -114,7 +119,8 @@ static const pySm_stateType nestedStates_state_SUB_B =
 		.onState = nestedStates_SF_SUB_B,
 		.onExitState = PYSM_NULL_PTR,
 		.superstateElementNo = (pySm_int8)NESTEDSTATES_SUP_B,
-		.superStateStatus = PYSM_NO_SUPERSTATE
+		.defaultSubstateElementNo = (pySm_int8)NESTEDSTATES_RESERVED_STATE_HAS_NO_SUBSTATE,
+		.stateStatus = PYSM_STATE_INACTIVE
 };
 
 static const pySm_stateType nestedStates_state_SUB_C =
@@ -123,7 +129,8 @@ static const pySm_stateType nestedStates_state_SUB_C =
 		.onState = nestedStates_SF_SUB_C,
 		.onExitState = PYSM_NULL_PTR,
 		.superstateElementNo = (pySm_int8)NESTEDSTATES_SUP_A,
-		.superStateStatus = PYSM_NO_SUPERSTATE
+		.defaultSubstateElementNo = (pySm_int8)NESTEDSTATES_RESERVED_STATE_HAS_NO_SUBSTATE,
+		.stateStatus = PYSM_STATE_INACTIVE
 };
 
 static const pySm_stateType nestedStates_state_SUB_D =
@@ -132,7 +139,8 @@ static const pySm_stateType nestedStates_state_SUB_D =
 		.onState = nestedStates_SF_SUB_D,
 		.onExitState = PYSM_NULL_PTR,
 		.superstateElementNo = (pySm_int8)NESTEDSTATES_SUP_D,
-		.superStateStatus = PYSM_NO_SUPERSTATE
+		.defaultSubstateElementNo = (pySm_int8)NESTEDSTATES_RESERVED_STATE_HAS_NO_SUBSTATE,
+		.stateStatus = PYSM_STATE_INACTIVE
 };
 
 static const pySm_stateType nestedStates_state_SUB_E =
@@ -141,7 +149,8 @@ static const pySm_stateType nestedStates_state_SUB_E =
 		.onState = nestedStates_SF_SUB_E,
 		.onExitState = PYSM_NULL_PTR,
 		.superstateElementNo = (pySm_int8)NESTEDSTATES_SUP_D,
-		.superStateStatus = PYSM_NO_SUPERSTATE
+		.defaultSubstateElementNo = (pySm_int8)NESTEDSTATES_RESERVED_STATE_HAS_NO_SUBSTATE,
+		.stateStatus = PYSM_STATE_INACTIVE
 };
 
 static const pySm_stateType nestedStates_state_SUB_F =
@@ -150,7 +159,8 @@ static const pySm_stateType nestedStates_state_SUB_F =
 		.onState = nestedStates_SF_SUB_F,
 		.onExitState = PYSM_NULL_PTR,
 		.superstateElementNo = (pySm_int8)NESTEDSTATES_SUP_C,
-		.superStateStatus = PYSM_NO_SUPERSTATE
+		.defaultSubstateElementNo = (pySm_int8)NESTEDSTATES_RESERVED_STATE_HAS_NO_SUBSTATE,
+		.stateStatus = PYSM_STATE_INACTIVE
 };
 
 
@@ -255,7 +265,7 @@ pySm_stateMachineType nestedStates_stateMachine_s =
 	.firstValidStateNo = (pySm_uint8)NESTEDSTATES_SUP_A,
 	.transitions = nestedStates_transitions_sa,
 	.numberOfTransitions = 9u,
-	.runEntryOfInitialState = PYSM_TRUE,
+	.firstRun = PYSM_TRUE,
 	.resetVariables = nestedStates_variableResetFunction
 };
 
