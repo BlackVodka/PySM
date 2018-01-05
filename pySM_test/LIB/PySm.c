@@ -192,6 +192,7 @@ pySm_returnType PySm_resetStateMachine(pySm_stateMachineType *stateMachine)
          {
         	 stateMachine->resetVariables();
          }
+         stateMachine->runEntryOfInitialState_b = (pySm_bool)PYSM_TRUE;
          returnValue = PYSM_E_OK;
       }
    }
