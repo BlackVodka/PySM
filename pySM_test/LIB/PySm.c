@@ -374,8 +374,15 @@ static void PySm_runDuringInstructions(const pySm_stateMachineType *stateMachine
 				break;
 			}
 		}
+		else
+		{
+			/* There can't be an active superstate over an inactive substate, so */
+			/* we can abort during() - handling here */
+			break;
+		}
 	}
-	while(statePtr->superstateElementNo >= stateMachine->firstValidStateNo);
+	/* Exit condition should not be necessary, but just for being sure */
+	while(PYSM_STATE_ACTIVE == *(statePtr->stateStatusPtr));
 }
 
 
