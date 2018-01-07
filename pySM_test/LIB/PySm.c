@@ -413,20 +413,19 @@ static void PySm_enterState(
 *	Now we'll need to take care of the fact, that the target state
 *	also might be a superstate with default substates
 * ========================================================================= */
-	if(stateToEnter->superstateElementNo < stateMachine->firstValidStateNo)
+	if(stateToEnter->defaultSubstateElementNo < stateMachine->firstValidStateNo)
 	{
 		/* Target state isn't a superstate, set as current active state */
 		stateMachine->actualState = stateToEnter;
 	}
 	else
 	{
-		statePtr = (pySm_stateType*)stateMachine->states[stateToEnter->defaultSubstateElementNo];
 		do
 		{
-			statePtr->onState();
+			statePtr = (pySm_stateType*)stateMachine->states[statePtr->defaultSubstateElementNo];
+			statePtr->onEntryState();
 			*(statePtr->stateStatusPtr) = PYSM_STATE_ACTIVE;
 			stateMachine->actualState = statePtr;
-			statePtr = (pySm_stateType*)stateMachine->states[statePtr->defaultSubstateElementNo];
 		}
 		while(statePtr->defaultSubstateElementNo >= stateMachine->firstValidStateNo);
 	}
