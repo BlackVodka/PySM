@@ -165,7 +165,7 @@ pySm_returnType PySm_resetStateMachine(pySm_stateMachineType *stateMachine)
 	for(; stateNo < stateMachine->numberOfStates; stateNo++)
 	{
 		statePtr = (pySm_stateType*)stateMachine->states[stateNo];
-		statePtr->stateStatus = PYSM_STATE_INACTIVE;
+		*(statePtr->stateStatusPtr) = PYSM_STATE_INACTIVE;
 	}
 
          stateMachine->firstRun = (pySm_bool)PYSM_TRUE;
@@ -296,7 +296,7 @@ static void PySm_runExitOfSubstates(const pySm_stateMachineType *stateMachine, c
 			statePtr->onExitState();
 		}
 
-		statePtr->stateStatus = PYSM_STATE_INACTIVE;
+		*(statePtr->stateStatusPtr) = PYSM_STATE_INACTIVE;
 
 		if(statePtr->superstateElementNo >= stateMachine->firstValidStateNo)
 		{
@@ -321,7 +321,7 @@ static void PySm_runExitOfSuperstates(
 			statePtr->onExitState();
 		}
 
-		statePtr->stateStatus = PYSM_STATE_INACTIVE;
+		*(statePtr->stateStatusPtr) = PYSM_STATE_INACTIVE;
 
 		if(statePtr->superstateElementNo >= stateMachine->firstValidStateNo)
 		{
@@ -357,7 +357,7 @@ static void PySm_runDuringInstructions(const pySm_stateMachineType *stateMachine
 
 	/* Run active states, beginning with the current active at lowest hierarchy */
 	do{
-		if(PYSM_STATE_ACTIVE == statePtr->stateStatus)
+		if(PYSM_STATE_ACTIVE == *(statePtr->stateStatusPtr))
 		{
 			if(PYSM_NULL_PTR != statePtr->onState)
 			{
@@ -394,17 +394,17 @@ static void PySm_enterState(
 		while(statePtr->superstateElementNo >= stateMachine->firstValidStateNo)
 		{
 			/* Check if the found superstate is already activated */
-			if(PYSM_STATE_INACTIVE == stateMachine->states[statePtr->superstateElementNo]->stateStatus)
+			if(PYSM_STATE_INACTIVE == *(stateMachine->states[statePtr->superstateElementNo]->stateStatusPtr))
 			{
 				statePtr = (pySm_stateType*)stateMachine->states[statePtr->superstateElementNo];
 			}
 		}
 
-		if(PYSM_STATE_INACTIVE == statePtr->stateStatus)
+		if(PYSM_STATE_INACTIVE == *(statePtr->stateStatusPtr))
 		{
 			/* no check for Nullptr needed, as the entry function will be always generated */
 			statePtr->onEntryState();
-			statePtr->stateStatus = PYSM_STATE_ACTIVE;
+			*(statePtr->stateStatusPtr) = PYSM_STATE_ACTIVE;
 		}
 	}
 	while(statePtr != stateToEnter);
@@ -424,7 +424,7 @@ static void PySm_enterState(
 		do
 		{
 			statePtr->onState();
-			statePtr->stateStatus = PYSM_STATE_ACTIVE;
+			*(statePtr->stateStatusPtr) = PYSM_STATE_ACTIVE;
 			stateMachine->actualState = statePtr;
 			statePtr = (pySm_stateType*)stateMachine->states[statePtr->defaultSubstateElementNo];
 		}

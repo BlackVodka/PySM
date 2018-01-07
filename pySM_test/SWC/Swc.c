@@ -56,6 +56,7 @@ void Swc_main(void)
 	swc_nestedStatesInputSignals.trigger_f = (pySm_bool)PYSM_FALSE;
 	swc_nestedStatesInputSignals.trigger_g = (pySm_bool)PYSM_FALSE;
 	swc_nestedStatesInputSignals.trigger_h = (pySm_bool)PYSM_FALSE;
+	swc_nestedStatesInputSignals.trigger_i = (pySm_bool)PYSM_FALSE;
 
 
 /* Run the state machine n times                                             */

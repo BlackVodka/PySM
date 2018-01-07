@@ -122,7 +122,7 @@ typedef struct
 	/* TODO: Kommentar. Umweg über Enum-Platz nötig, da im state-typedef kein state-ptr verwendet werden kann (zirkelschluss) */
 	const pySm_int8                  superstateElementNo;
 	const pySm_int8                  defaultSubstateElementNo;
-	pySm_stateStatusType             stateStatus;
+	pySm_stateStatusType             *stateStatusPtr;
 } pySm_stateType;
 
 
