@@ -96,6 +96,11 @@ pySm_returnType PySm_runStateMachine(pySm_stateMachineType *stateMachine)
         		 do
         		 {
         			 exitingTransition = PySm_findExitingTransition(stateMachine, stateToTestForExit);
+        			 /* Abort searching for an exiting transition immediately if one has been found */
+        			 if(PYSM_NULL_PTR != exitingTransition)
+        			 {
+        				 break;
+        			 }
         			 /* Go one level higher in state hierarchy, if any */
         			 if(stateToTestForExit->superstateElementNo >= stateMachine->firstValidStateNo)
         			 {
@@ -363,21 +368,15 @@ static void PySm_runDuringInstructions(const pySm_stateMachineType *stateMachine
 			{
 				statePtr->onState();
 			}
-			if(statePtr->superstateElementNo >= stateMachine->firstValidStateNo)
-			{
-				/* State has a valid superstate */
-				statePtr = stateMachine->states[statePtr->superstateElementNo];
-			}
-			else
-			{
-				/* Topmost level reached */
-				break;
-			}
+		}
+		if(statePtr->superstateElementNo >= stateMachine->firstValidStateNo)
+		{
+			/* State has a valid superstate */
+			statePtr = stateMachine->states[statePtr->superstateElementNo];
 		}
 		else
 		{
-			/* There can't be an active superstate over an inactive substate, so */
-			/* we can abort during() - handling here */
+			/* Topmost level reached */
 			break;
 		}
 	}
@@ -404,6 +403,10 @@ static void PySm_enterState(
 			if(PYSM_STATE_INACTIVE == *(stateMachine->states[statePtr->superstateElementNo]->stateStatusPtr))
 			{
 				statePtr = (pySm_stateType*)stateMachine->states[statePtr->superstateElementNo];
+			}
+			else
+			{
+				break;
 			}
 		}
 
