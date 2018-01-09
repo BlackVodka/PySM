@@ -17,6 +17,7 @@
 #   License along with Box.  If not, see <http://www.gnu.org/licenses/>.     #
 ##############################################################################
 __ENABLE_VARIABLE_TYPECHECK__ = False
+__ENABLE_C99_SUPPORT__ = False
 
 default_code_header_file = 'defaultCodeHeader.txt'
 default_author_name = 'Author'

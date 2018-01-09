@@ -225,16 +225,26 @@ def WriteStateObjects(self, cFile, states):
     for state in states:
         cFile.write('static const ' + Cfg.lib_stateType + ' ' + SM_name + '_state_' + state['state_name'] + ' =\n')
         cFile.write('{\n')
-        cFile.write('\t\t' + '.onEntryState = ')
+        if Cfg.__ENABLE_C99_SUPPORT__:
+            cFile.write('\t\t' + '.onEntryState = ')
+        else:
+            cFile.write('\t\t')
         # write always entry instructions
         cFile.write(SM_name + '_SF_' + state['state_name'] + '_entry' + ',\n')
 
-        cFile.write('\t\t' + '.onState = ')
+        if Cfg.__ENABLE_C99_SUPPORT__:
+            cFile.write('\t\t' + '.onState = ')
+        else:
+            cFile.write('\t\t')
         if state['list_of_during_instructions'] is not None:
             cFile.write(SM_name + '_SF_' + state['state_name'] + ',\n')
         else:
             cFile.write(Cfg.lib_nullPtr + ',\n')
-        cFile.write('\t\t' + '.onExitState = ')
+        
+        if Cfg.__ENABLE_C99_SUPPORT__:
+            cFile.write('\t\t' + '.onExitState = ')
+        else:
+            cFile.write('\t\t')
         if state['list_of_exit_instructions'] is not None:
             cFile.write(SM_name + '_SF_' + state['state_name'] + '_exit' + '\n')
         else:
