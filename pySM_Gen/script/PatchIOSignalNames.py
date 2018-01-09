@@ -79,7 +79,8 @@ def Patch_states(self, states, config):
                                 ((states[stateNo])[stateEntry])[entryLineNo] = entryLine.replace( inVar["variableName"], inPrefix + inVar["variableName"] )
                                 patched = True
                                 nOfPatchedElems += 1
-                                
+                    # Reload entryLine content
+                    entryLine = (state[stateEntry])[entryLineNo]        
                     if config["outputSignals"] is not None:
                         for outVar in config["outputSignals"]:
                             # found a entry for an input signal
