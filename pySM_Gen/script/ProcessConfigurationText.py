@@ -124,9 +124,14 @@ def Process_IO_signals(self, config):
             
         splittedLine = ioLine.split(' ')
         # first part of variables should be a valid data type and a variable name should follow up
-        if not(splittedLine[0] in Cfg.list_of_dataTypes) or not(len(splittedLine) == 2):
-            self.logWindow(TS.LOG_WINDOW_CONFIGURATION_TEXT_PROCESSING_IO_PROBLEM.format(ioLine))
-            continue #with next line
+        if Cfg.__ENABLE_VARIABLE_TYPECHECK__:
+            if not(splittedLine[0] in Cfg.list_of_dataTypes) or not(len(splittedLine) == 2):
+                self.logWindow(TS.LOG_WINDOW_CONFIGURATION_TEXT_PROCESSING_IO_PROBLEM.format(ioLine))
+                continue #with next line
+        else:
+                if not(len(splittedLine) == 2):
+                    self.logWindow(TS.LOG_WINDOW_CONFIGURATION_TEXT_PROCESSING_IO_PROBLEM.format(ioLine))
+                    continue #with next line
 
         # last symbol should be a semicolon
         if ioLine.rfind(';') == -1:
@@ -198,11 +203,14 @@ def Process_variables(self, configTxt):
             continue #with next line
         
         varType = firstLinePart[0]
-        if varType in Cfg.list_of_dataTypes:
-            elem['dataType'] = varType
+        if Cfg.__ENABLE_VARIABLE_TYPECHECK__:
+            if varType in Cfg.list_of_dataTypes:
+                elem['dataType'] = varType
+            else:
+                self.logWindow(TS.LOG_WINDOW_CONFIGURATION_TEXT_PROCESSING_VARIABLES_INVALID_DATATYPE.format(varLine, varType))
+                continue #with next line
         else:
-            self.logWindow(TS.LOG_WINDOW_CONFIGURATION_TEXT_PROCESSING_VARIABLES_INVALID_DATATYPE.format(varLine, varType))
-            continue #with next line
+            elem['dataType'] = varType
         
         elem['variableName'] = firstLinePart[1]
         listOfVariables.append(elem)
