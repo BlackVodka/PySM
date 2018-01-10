@@ -79,6 +79,7 @@ def Patch_states(self, states, config):
                                 ((states[stateNo])[stateEntry])[entryLineNo] = entryLine.replace( inVar["variableName"], inPrefix + inVar["variableName"] )
                                 patched = True
                                 nOfPatchedElems += 1
+                                entryLine = (state[stateEntry])[entryLineNo]
                     # Reload entryLine content
                     entryLine = (state[stateEntry])[entryLineNo]        
                     if config["outputSignals"] is not None:
@@ -88,6 +89,7 @@ def Patch_states(self, states, config):
                                 ((states[stateNo])[stateEntry])[entryLineNo] = entryLine.replace( outVar["variableName"], outPrefix + outVar["variableName"] )
                                 patched = True
                                 nOfPatchedElems += 1
+                                entryLine = (state[stateEntry])[entryLineNo]
         if patched:
             nOfPatchedStates += 1
             
@@ -153,6 +155,10 @@ def Patch_transitions(self, transitions, config):
                                 ((transitions[transNo])[transEntry])[entryLineNo] = entryLine.replace( inVar["variableName"], inPrefix + inVar["variableName"] )
                                 patched = True
                                 nOfPatchedElems += 1
+                                entryLine = (trans[transEntry])[entryLineNo]
+                                
+                    # Reload entryLine content
+                    entryLine = (trans[transEntry])[entryLineNo] 
                                 
                     if config["outputSignals"] is not None:
                         for outVar in config["outputSignals"]:
@@ -161,6 +167,7 @@ def Patch_transitions(self, transitions, config):
                                 ((transitions[transNo])[transEntry])[entryLineNo] = entryLine.replace( outVar["variableName"], outPrefix + outVar["variableName"] )
                                 patched = True
                                 nOfPatchedElems += 1
+                                entryLine = (trans[transEntry])[entryLineNo]
         if patched:
             nOfPatchedTransitions += 1
             
