@@ -365,7 +365,7 @@ def WriteLocalVariables(self, cFile, config):
     # User variables
     if config['variables'] is not None:
         for line in config['variables']:
-            cFile.write(line['dataType'] + ' ' + line['variableName'] + ' = ' + line['initialValue'] + ';\n')
+            cFile.write('static ' + line['dataType'] + ' ' + line['variableName'] + ' = ' + line['initialValue'] + ';\n')
     cFile.write('\n')
     
     return
