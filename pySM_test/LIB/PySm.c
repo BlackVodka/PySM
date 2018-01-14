@@ -87,7 +87,7 @@ pySm_returnType PySm_runStateMachine(pySm_stateMachineType *stateMachine)
 /* next the during statement gets executed                                   */
         	 if((pySm_bool)PYSM_TRUE == stateMachine->firstRun)
         	 {
-        		 PySm_enterState(stateMachine, stateMachine->states[stateMachine->firstValidStateNo]);
+        		 PySm_enterState(stateMachine, stateMachine->entryState);
         		 stateMachine->firstRun = (pySm_bool)PYSM_FALSE;
         	 }
         	 else
@@ -389,12 +389,13 @@ static void PySm_enterState(
 		pySm_stateMachineType *stateMachine,
 		const pySm_stateType* stateToEnter)
 {
-	pySm_stateType* statePtr = (pySm_stateType*)stateToEnter;
+	pySm_stateType* statePtr = PYSM_NULL_PTR;
 
 	/* This outer do-while-loop ensured running and activating superstates of the target state, beginning */
 	/* from the topmost down to the target state itself */
 	do
 	{
+		statePtr = (pySm_stateType*)stateToEnter;
 		/* This while loop searches for the topmost inactive state, beginning from the transition target state */
 		/* Afterwards, it get's activated and the according entry() get's executed */
 		while(statePtr->superstateElementNo >= stateMachine->firstValidStateNo)
