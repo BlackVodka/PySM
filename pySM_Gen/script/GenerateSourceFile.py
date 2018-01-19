@@ -365,7 +365,10 @@ def WriteLocalVariables(self, cFile, config):
     # User variables
     if config['variables'] is not None:
         for line in config['variables']:
-            cFile.write('static ' + line['dataType'] + ' ' + line['variableName'] + ' = ' + line['initialValue'] + ';\n')
+            if line['preceedingKeyWord'] is not None:
+                cFile.write('static ' + line['preceedingKeyWord'] + ' ' + line['dataType'] + ' ' + line['variableName'] + ' = ' + line['initialValue'] + ';\n')
+            else:
+                cFile.write('static ' + line['dataType'] + ' ' + line['variableName'] + ' = ' + line['initialValue'] + ';\n')
     cFile.write('\n')
     
     return

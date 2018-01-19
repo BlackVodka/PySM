@@ -26,6 +26,7 @@ max_number_of_transitions_per_state = 10
 logfile_name = 'PySM_Gen.log'
 list_of_dataTypes = [
     'pySm_bool', 'pySm_uint8', 'pySm_int8', 'pySm_uint16', 'pySm_int16', 'pySm_uint32', 'pySm_int32', 'pySm_uint64', 'pySm_int64']
+list_ofPreceedingVariableKeywords = ['const', 'volatile']
 # {} will be replaced by given state machine name
 inputSignalPrefix = "{}_inputSignals->"
 outputSignalPrefix = "{}_outputSignals->"

@@ -164,6 +164,7 @@ def Process_variables(self, configTxt):
     Returns:
         None, if an error happened/no valid variables were found
         or a list of processed variable dicts, containing
+            'preceedingKeyWord' : A valid preceeding keyword like const or volatile
             'dataType' : A valid datatype as defined in PySM_Cfg.py/list_of_dataTypes,
             'variableName' : The processed signal's name,
             'initialValue' : The initial value of the variable as string
@@ -173,6 +174,7 @@ def Process_variables(self, configTxt):
     
     for varLine in configTxt:
         elem = {
+        'preceedingKeyWord' : None,
         'dataType' : None,
         'variableName' : None,
         'initialValue' : None
@@ -199,10 +201,26 @@ def Process_variables(self, configTxt):
         # continue with finding variable type and name
         firstLinePart = (splittedLine[0]).split(' ')
         if not (len(firstLinePart) == 2):
-            self.logWindow(TS.LOG_WINDOW_CONFIGURATION_TEXT_PROCESSING_VARIABLES_INVALID_VARIABLE_NAME_OR_DATATYPE.format(varLine))
-            continue #with next line
+            # Found an additional preceeeding variable codeword?
+            if (len(firstLinePart) == 3):
+                # Is preceeding variable word a valid codeword?
+                if (firstLinePart[0] in Cfg.list_ofPreceedingVariableKeywords):
+                    # everything ok
+                    pass
+                else:
+                    self.logWindow(TS.LOG_WINDOW_CONFIGURATION_TEXT_PROCESSING_VARIABLES_INVALID_VARIABLE_NAME_OR_DATATYPE.format(varLine))
+                    continue #with next line
+            else:
+                self.logWindow(TS.LOG_WINDOW_CONFIGURATION_TEXT_PROCESSING_VARIABLES_INVALID_VARIABLE_NAME_OR_DATATYPE.format(varLine))
+                continue #with next line
         
-        varType = firstLinePart[0]
+        if (len(firstLinePart) == 3):
+            varType = firstLinePart[1]
+            elem['preceedingKeyWord'] = firstLinePart[0]
+            elem['variableName'] = firstLinePart[2]
+        else:
+            varType = firstLinePart[0]
+            elem['variableName'] = firstLinePart[1]
         if Cfg.__ENABLE_VARIABLE_TYPECHECK__:
             if varType in Cfg.list_of_dataTypes:
                 elem['dataType'] = varType
@@ -212,7 +230,6 @@ def Process_variables(self, configTxt):
         else:
             elem['dataType'] = varType
         
-        elem['variableName'] = firstLinePart[1]
         listOfVariables.append(elem)
         
     if len(listOfVariables) == 0:
