@@ -273,7 +273,7 @@ def WriteStateTransitionArray(self, cFile, states, transitions, ttfs, tafs):
     SM_name = self.txtStateMachineName.text()
     
     cFile.write(GEN.GENERATED_FILE_SOURCE_STATE_TRANSITIONS_ARRAY_HEADING + '\n')
-    cFile.write('static ' + Cfg.lib_transitionType + ' ' + SM_name + '_transitions_sa' + ('[{}]').format(len(transitions)) + ' = \n')
+    cFile.write('static const ' + Cfg.lib_transitionType + ' ' + SM_name + '_transitions_sa' + ('[{}]').format(len(transitions)) + ' = \n')
     cFile.write('{\n')
     
     for n,trans in enumerate(transitions):
