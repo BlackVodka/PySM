@@ -89,7 +89,7 @@ pySm_returnType PySm_runStateMachine(pySm_stateMachineType *stateMachine)
 /* ========================================================================= */
             for(transitionNo_ui8 = 0u; transitionNo_ui8 < stateMachine->numberOfTransitions; transitionNo_ui8++)
             {
-               if(stateMachine->transitions[transitionNo_ui8].sourceState->onState == stateMachine->actualState->onState)
+               if(stateMachine->transitions[transitionNo_ui8].sourceState == stateMachine->actualState)
                {
             	   transitionsToTest_aui8[numberOfTransitionsToTest_ui8] = transitionNo_ui8;
             	   numberOfTransitionsToTest_ui8++;
