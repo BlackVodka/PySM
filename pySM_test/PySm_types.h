@@ -63,4 +63,13 @@ typedef unsigned char            pySm_bool;
 #define PYSM_STD_OFF             0u
 #define PYSM_NULL_PTR            (void *)0
 
+typedef enum
+{
+   PYSM_E_OK = 0u,
+   PYSM_E_UNKNOWN_STATE,
+   PYSM_E_UNKNOWN_TRANSITION,
+   PYSM_INVALID_MACHINE
+} pySm_returnType;
+
+
 #endif /* PYSM_TYPES_H_ */

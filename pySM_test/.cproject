@@ -29,7 +29,6 @@
 								<option id="gnu.c.compiler.exe.debug.option.debugging.level.376946162" name="Debug Level" superClass="gnu.c.compiler.exe.debug.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.1898788952" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/pySM_test}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/pySM_test/LIB}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/pySM_test/SWC}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/pySM_test/SWC/genSM}&quot;"/>
 								</option>
@@ -45,7 +44,6 @@
 							<tool id="cdt.managedbuild.tool.gnu.assembler.exe.debug.2107822225" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.exe.debug">
 								<option id="gnu.both.asm.option.include.paths.1271168295" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/pySM_test}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/pySM_test/LIB}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/pySM_test/SWC}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/pySM_test/SWC/genSM}&quot;"/>
 								</option>
@@ -85,11 +83,10 @@
 								<option id="gnu.c.compiler.exe.release.option.debugging.level.2119111987" name="Debug Level" superClass="gnu.c.compiler.exe.release.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.none" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.1723775758" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/pySM_test}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/pySM_test/LIB}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/pySM_test/SWC}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/pySM_test/SWC/genSM}&quot;"/>
 								</option>
-								<option id="gnu.c.compiler.option.dialect.std.330256968" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.default" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.dialect.std.330256968" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.default" valueType="enumerated"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1606309306" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.exe.release.391475954" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.release">

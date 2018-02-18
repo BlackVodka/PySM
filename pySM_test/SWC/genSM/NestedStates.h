@@ -7,7 +7,7 @@
 /**
  * @file NestedStates.h
  * @author Markus Burger
- * @date 2017-12-24
+ * @date 2018-01-28
  * @brief Header for generated state machine nestedStates
  * Hand-written test file
  */
@@ -19,7 +19,6 @@
 /* INCLUDES                                                                  */
 /* ========================================================================= */
 #include "PySm_types.h"
-#include "PySm.h"
 
 
 /* ========================================================================= */
@@ -45,6 +44,9 @@ typedef struct
 	pySm_bool trigger_g;
 	pySm_bool trigger_h;
 	pySm_bool trigger_i;
+	pySm_bool trigger_j;
+	pySm_bool trigger_k;
+	pySm_bool trigger_l;
 } nestedStates_inputSignalsType;
 
 
@@ -64,25 +66,53 @@ typedef struct
 */
 typedef enum
 {
-	NESTEDSTATES_RESERVED_INVALID_STATE = -3,
-	NESTEDSTATES_RESERVED_STATE_HAS_NO_SUPERSTATE,
-	NESTEDSTATES_RESERVED_STATE_HAS_NO_SUBSTATE,
-	NESTEDSTATES_SUP_A, /* Must always be 0 ! */
+	NESTEDSTATES_RESERVED_INVALID_STATE,
+	NESTEDSTATES_RESERVED_INACTIVE_STATE,
+	NESTEDSTATES_SUP_A,
 	NESTEDSTATES_SUP_B,
 	NESTEDSTATES_SUP_C,
 	NESTEDSTATES_SUP_D,
+	NESTEDSTATES_SUP_E,
+	NESTEDSTATES_SUP_F,
+	NESTEDSTATES_SUP_G,
 	NESTEDSTATES_SUB_A,
 	NESTEDSTATES_SUB_B,
 	NESTEDSTATES_SUB_C,
 	NESTEDSTATES_SUB_D,
 	NESTEDSTATES_SUB_E,
-	NESTEDSTATES_SUB_F
+	NESTEDSTATES_SUB_F,
+	NESTEDSTATES_SUB_G,
+	NESTEDSTATES_SUB_H,
+	NESTEDSTATES_SUB_I,
+	NESTEDSTATES_SUB_J,
+	NESTEDSTATES_TOTAL_NUMBER_OF_STATES
 } nestedStates_activeStateType;
+
+
+typedef enum
+{
+	NESTEDSTATES_STATE_INACTIVE,
+	NESTEDSTATES_STATE_ACTIVE
+} nestedStates_stateStatusType;
+
+
+typedef enum
+{
+	NESTEDSTATES_NO_EXIT_REQUESTED,
+	NESTEDSTATES_EXIT_REQUESTED
+} nestedStates_exitRequestType;
 
 
 /* ========================================================================= */
 /* API DECLARATION                                                           */
 /* ========================================================================= */
+/**
+ * @brief Main function of the state machine
+ * simpleEx
+*/
+pySm_returnType NestedStates_init(void);
+
+
 /**
  * @brief Main function of the state machine
  * simpleEx

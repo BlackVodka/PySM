@@ -48,15 +48,7 @@ void Swc_main(void)
 	uint8_t n = 50;
 
 /* Fill needed input signals with values                                     */
-	swc_nestedStatesInputSignals.trigger_a = (pySm_bool)PYSM_FALSE;
-	swc_nestedStatesInputSignals.trigger_b = (pySm_bool)PYSM_FALSE;
-	swc_nestedStatesInputSignals.trigger_c = (pySm_bool)PYSM_FALSE;
-	swc_nestedStatesInputSignals.trigger_d = (pySm_bool)PYSM_FALSE;
-	swc_nestedStatesInputSignals.trigger_e = (pySm_bool)PYSM_FALSE;
-	swc_nestedStatesInputSignals.trigger_f = (pySm_bool)PYSM_FALSE;
-	swc_nestedStatesInputSignals.trigger_g = (pySm_bool)PYSM_FALSE;
-	swc_nestedStatesInputSignals.trigger_h = (pySm_bool)PYSM_FALSE;
-	swc_nestedStatesInputSignals.trigger_i = (pySm_bool)PYSM_FALSE;
+
 
 
 /* Run the state machine n times                                             */

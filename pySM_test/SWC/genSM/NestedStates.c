@@ -19,6 +19,15 @@
 #include "NestedStates.h"
 
 
+#define DEACTIVATE_STATE(statename)	do{\
+	nestedStates_stateStati[statename] = NESTEDSTATES_STATE_INACTIVE;\
+}while(0)
+#define ACTIVATE_STATE(statename)	do{\
+	nestedStates_activeState = statename;\
+	nestedStates_stateStati[statename] = NESTEDSTATES_STATE_ACTIVE;\
+}while(0)
+
+
 /* ========================================================================= */
 /* STATE FUNCTION (SF) PROTOTYPES                                            */
 /* ========================================================================= */
@@ -26,12 +35,6 @@ static void nestedStates_SF_SUP_A_entry(void);
 static void nestedStates_SF_SUP_B_entry(void);
 static void nestedStates_SF_SUP_C_entry(void);
 static void nestedStates_SF_SUP_D_entry(void);
-static void nestedStates_SF_SUB_A_entry(void);
-static void nestedStates_SF_SUB_B_entry(void);
-static void nestedStates_SF_SUB_C_entry(void);
-static void nestedStates_SF_SUB_D_entry(void);
-static void nestedStates_SF_SUB_E_entry(void);
-static void nestedStates_SF_SUB_F_entry(void);
 static void nestedStates_SF_SUB_A(void);
 static void nestedStates_SF_SUB_B(void);
 static void nestedStates_SF_SUB_C(void);
@@ -61,231 +64,12 @@ static pySm_bool nestedStates_TTF_SUB_C_to_SUB_F(void);
 
 
 /* ========================================================================= */
-/* CREATION OF STATE STATUS INFORMATION                                      */
+/*  TODO TEXT: PROTOTYPES                                                    */
 /* ========================================================================= */
-static pySm_stateStatusType nestedStates_stateStatus[10] =
-{
-		PYSM_STATE_INACTIVE,		/* initial state status SUP_A */
-		PYSM_STATE_INACTIVE,		/* initial state status SUP_B */
-		PYSM_STATE_INACTIVE,		/* initial state status SUP_C */
-		PYSM_STATE_INACTIVE,		/* initial state status SUP_D */
-		PYSM_STATE_INACTIVE,		/* initial state status SUB_A */
-		PYSM_STATE_INACTIVE,		/* initial state status SUB_B */
-		PYSM_STATE_INACTIVE,		/* initial state status SUB_C */
-		PYSM_STATE_INACTIVE,		/* initial state status SUB_D */
-		PYSM_STATE_INACTIVE,		/* initial state status SUB_E */
-		PYSM_STATE_INACTIVE 		/* initial state status SUB_F */
-};
+pySm_returnType nestedStates_runModel(void);
+pySm_returnType nestedStates_runSubSM_SUP_A(nestedStates_exitRequestType);
+pySm_returnType nestedStates_runSubSM_SUP_B(nestedStates_exitRequestType);
 
-
-/* ========================================================================= */
-/* CREATION OF STATE OBJECTS                                                 */
-/* ========================================================================= */
-static const pySm_stateType nestedStates_state_SUP_A =
-{
-		.onEntryState = nestedStates_SF_SUP_A_entry,
-		.onState = PYSM_NULL_PTR,
-		.onExitState = PYSM_NULL_PTR,
-		.superstateElementNo = (pySm_int8)NESTEDSTATES_RESERVED_STATE_HAS_NO_SUPERSTATE,
-		.defaultSubstateElementNo = (pySm_int8)NESTEDSTATES_SUP_B,
-		.stateStatusPtr = &nestedStates_stateStatus[(pySm_int8)NESTEDSTATES_SUP_A]
-};
-
-static const pySm_stateType nestedStates_state_SUP_B =
-{
-		.onEntryState = nestedStates_SF_SUP_B_entry,
-		.onState = PYSM_NULL_PTR,
-		.onExitState = PYSM_NULL_PTR,
-		.superstateElementNo = (pySm_int8)NESTEDSTATES_SUP_A,
-		.defaultSubstateElementNo = (pySm_int8)NESTEDSTATES_SUB_A,
-		.stateStatusPtr = &nestedStates_stateStatus[(pySm_int8)NESTEDSTATES_SUP_B]
-};
-
-static const pySm_stateType nestedStates_state_SUP_C =
-{
-		.onEntryState = nestedStates_SF_SUP_C_entry,
-		.onState = PYSM_NULL_PTR,
-		.onExitState = PYSM_NULL_PTR,
-		.superstateElementNo = (pySm_int8)NESTEDSTATES_RESERVED_STATE_HAS_NO_SUPERSTATE,
-		.defaultSubstateElementNo = (pySm_int8)NESTEDSTATES_SUP_D,
-		.stateStatusPtr = &nestedStates_stateStatus[(pySm_int8)NESTEDSTATES_SUP_C]
-};
-
-static const pySm_stateType nestedStates_state_SUP_D =
-{
-		.onEntryState = nestedStates_SF_SUP_D_entry,
-		.onState = PYSM_NULL_PTR,
-		.onExitState = PYSM_NULL_PTR,
-		.superstateElementNo = (pySm_int8)NESTEDSTATES_SUP_C,
-		.defaultSubstateElementNo = (pySm_int8)NESTEDSTATES_SUB_D,
-		.stateStatusPtr = &nestedStates_stateStatus[(pySm_int8)NESTEDSTATES_SUP_D]
-};
-
-static const pySm_stateType nestedStates_state_SUB_A =
-{
-		.onEntryState = nestedStates_SF_SUB_A_entry,
-		.onState = nestedStates_SF_SUB_A,
-		.onExitState = PYSM_NULL_PTR,
-		.superstateElementNo = (pySm_int8)NESTEDSTATES_SUP_B,
-		.defaultSubstateElementNo = (pySm_int8)NESTEDSTATES_RESERVED_STATE_HAS_NO_SUBSTATE,
-		.stateStatusPtr = &nestedStates_stateStatus[(pySm_int8)NESTEDSTATES_SUB_A]
-};
-
-static const pySm_stateType nestedStates_state_SUB_B =
-{
-		.onEntryState = nestedStates_SF_SUB_B_entry,
-		.onState = nestedStates_SF_SUB_B,
-		.onExitState = PYSM_NULL_PTR,
-		.superstateElementNo = (pySm_int8)NESTEDSTATES_SUP_B,
-		.defaultSubstateElementNo = (pySm_int8)NESTEDSTATES_RESERVED_STATE_HAS_NO_SUBSTATE,
-		.stateStatusPtr = &nestedStates_stateStatus[(pySm_int8)NESTEDSTATES_SUB_B]
-};
-
-static const pySm_stateType nestedStates_state_SUB_C =
-{
-		.onEntryState = nestedStates_SF_SUB_C_entry,
-		.onState = nestedStates_SF_SUB_C,
-		.onExitState = PYSM_NULL_PTR,
-		.superstateElementNo = (pySm_int8)NESTEDSTATES_SUP_A,
-		.defaultSubstateElementNo = (pySm_int8)NESTEDSTATES_RESERVED_STATE_HAS_NO_SUBSTATE,
-		.stateStatusPtr = &nestedStates_stateStatus[(pySm_int8)NESTEDSTATES_SUB_C]
-};
-
-static const pySm_stateType nestedStates_state_SUB_D =
-{
-		.onEntryState = nestedStates_SF_SUB_D_entry,
-		.onState = nestedStates_SF_SUB_D,
-		.onExitState = PYSM_NULL_PTR,
-		.superstateElementNo = (pySm_int8)NESTEDSTATES_SUP_D,
-		.defaultSubstateElementNo = (pySm_int8)NESTEDSTATES_RESERVED_STATE_HAS_NO_SUBSTATE,
-		.stateStatusPtr = &nestedStates_stateStatus[(pySm_int8)NESTEDSTATES_SUB_D]
-};
-
-static const pySm_stateType nestedStates_state_SUB_E =
-{
-		.onEntryState = nestedStates_SF_SUB_E_entry,
-		.onState = nestedStates_SF_SUB_E,
-		.onExitState = PYSM_NULL_PTR,
-		.superstateElementNo = (pySm_int8)NESTEDSTATES_SUP_D,
-		.defaultSubstateElementNo = (pySm_int8)NESTEDSTATES_RESERVED_STATE_HAS_NO_SUBSTATE,
-		.stateStatusPtr = &nestedStates_stateStatus[(pySm_int8)NESTEDSTATES_SUB_E]
-};
-
-static const pySm_stateType nestedStates_state_SUB_F =
-{
-		.onEntryState = nestedStates_SF_SUB_F_entry,
-		.onState = nestedStates_SF_SUB_F,
-		.onExitState = PYSM_NULL_PTR,
-		.superstateElementNo = (pySm_int8)NESTEDSTATES_SUP_C,
-		.defaultSubstateElementNo = (pySm_int8)NESTEDSTATES_RESERVED_STATE_HAS_NO_SUBSTATE,
-		.stateStatusPtr = &nestedStates_stateStatus[(pySm_int8)NESTEDSTATES_SUB_F]
-};
-
-
-/* ========================================================================= */
-/* CREATION OF STATE OBJECT POINTER ARRAY                                    */
-/* ========================================================================= */
-static const pySm_stateType* nestedStates_states_pa[10] =
-{
-		&nestedStates_state_SUP_A,
-		&nestedStates_state_SUP_B,
-		&nestedStates_state_SUP_C,
-		&nestedStates_state_SUP_D,
-		&nestedStates_state_SUB_A,
-		&nestedStates_state_SUB_B,
-		&nestedStates_state_SUB_C,
-		&nestedStates_state_SUB_D,
-		&nestedStates_state_SUB_E,
-		&nestedStates_state_SUB_F
-};
-
-
-/* ========================================================================= */
-/* CREATION OF STATE TRANSITIONS ARRAY                                       */
-/* ========================================================================= */
-static pySm_stateTransitionType nestedStates_transitions_sa[9] =
-{
-	{
-		&nestedStates_state_SUP_A,
-		&nestedStates_state_SUP_C,
-		nestedStates_TTF_SUP_A_to_SUP_C,
-		(pySm_transitionPriorityType)1u,
-		PYSM_NULL_PTR
-	},
-	{
-		&nestedStates_state_SUB_A,
-		&nestedStates_state_SUP_C,
-		nestedStates_TTF_SUB_A_to_SUP_C,
-		(pySm_transitionPriorityType)1u,
-		PYSM_NULL_PTR
-	},
-	{
-		&nestedStates_state_SUB_A,
-		&nestedStates_state_SUB_D,
-		nestedStates_TTF_SUB_A_to_SUB_D,
-		(pySm_transitionPriorityType)2u,
-		PYSM_NULL_PTR
-	},
-	{
-		&nestedStates_state_SUP_A,
-		&nestedStates_state_SUB_E,
-		nestedStates_TTF_SUP_A_to_SUB_E,
-		(pySm_transitionPriorityType)2u,
-		PYSM_NULL_PTR
-	},
-	{
-		&nestedStates_state_SUB_B,
-		&nestedStates_state_SUB_C,
-		nestedStates_TTF_SUB_B_to_SUB_C,
-		(pySm_transitionPriorityType)1u,
-		PYSM_NULL_PTR
-	},
-	{
-		&nestedStates_state_SUB_A,
-		&nestedStates_state_SUB_C,
-		nestedStates_TTF_SUB_A_to_SUB_C,
-		(pySm_transitionPriorityType)3u,
-		PYSM_NULL_PTR
-	},
-	{
-		&nestedStates_state_SUP_B,
-		&nestedStates_state_SUB_D,
-		nestedStates_TTF_SUP_B_to_SUB_D,
-		(pySm_transitionPriorityType)1u,
-		PYSM_NULL_PTR
-	},
-	{
-		&nestedStates_state_SUB_B,
-		&nestedStates_state_SUB_D,
-		nestedStates_TTF_SUB_B_to_SUB_D,
-		(pySm_transitionPriorityType)2u,
-		PYSM_NULL_PTR
-	},
-	{
-		&nestedStates_state_SUB_C,
-		&nestedStates_state_SUB_F,
-		nestedStates_TTF_SUB_C_to_SUB_F,
-		(pySm_transitionPriorityType)1u,
-		PYSM_NULL_PTR
-	}
-};
-
-
-/* ========================================================================= */
-/* CREATION OF STATE MACHINE OBJECT                                          */
-/* ========================================================================= */
-pySm_stateMachineType nestedStates_stateMachine_s =
-{
-	.entryState =   &nestedStates_state_SUP_A,
-	.actualState =  &nestedStates_state_SUP_A,
-	.states = nestedStates_states_pa,
-	.numberOfStates = 10u,
-	.firstValidStateNo = (pySm_uint8)NESTEDSTATES_SUP_A,
-	.transitions = nestedStates_transitions_sa,
-	.numberOfTransitions = 9u,
-	.firstRun = PYSM_TRUE,
-	.resetVariables = nestedStates_variableResetFunction
-};
 
 
 /* ========================================================================= */
@@ -294,6 +78,12 @@ pySm_stateMachineType nestedStates_stateMachine_s =
 static nestedStates_inputSignalsType* nestedStates_inputSignals;
 static nestedStates_outputSignalsType* nestedStates_outputSignals;
 static nestedStates_activeStateType nestedStates_activeState = NESTEDSTATES_RESERVED_INVALID_STATE;
+
+static nestedStates_activeStateType nestedStates_rootActiveState = NESTEDSTATES_SUP_A;
+static nestedStates_activeStateType nestedStates_subSM_SUP_A = NESTEDSTATES_SUP_B;
+static nestedStates_activeStateType nestedStates_subSM_SUP_B = NESTEDSTATES_SUB_A;
+
+nestedStates_stateStatusType nestedStates_stateStati[NESTEDSTATES_TOTAL_NUMBER_OF_STATES];
 
 static pySm_uint16 localVar = 0u;
 
@@ -312,57 +102,40 @@ static void nestedStates_variableResetFunction(void)
 /* ========================================================================= */
 static void nestedStates_SF_SUP_A_entry(void)
 {
-	nestedStates_activeState = NESTEDSTATES_SUP_A;
 	localVar = 0u;
 }
 
 static void nestedStates_SF_SUP_B_entry(void)
 {
-	nestedStates_activeState = NESTEDSTATES_SUP_B;
 	localVar = 0u;
 }
 
 static void nestedStates_SF_SUP_C_entry(void)
 {
-	nestedStates_activeState = NESTEDSTATES_SUP_C;
 	localVar = 0u;
 }
 
 static void nestedStates_SF_SUP_D_entry(void)
 {
-	nestedStates_activeState = NESTEDSTATES_SUP_D;
 	localVar = 0u;
 }
 
-static void nestedStates_SF_SUB_A_entry(void)
+static void nestedStates_SF_SUP_E_entry(void)
 {
-	nestedStates_activeState = NESTEDSTATES_SUB_A;
+	localVar = 0u;
 }
 
-static void nestedStates_SF_SUB_B_entry(void)
+static void nestedStates_SF_SUP_F_entry(void)
 {
-	nestedStates_activeState = NESTEDSTATES_SUB_B;
+	localVar = 0u;
 }
 
-static void nestedStates_SF_SUB_C_entry(void)
+static void nestedStates_SF_SUP_G_entry(void)
 {
-	nestedStates_activeState = NESTEDSTATES_SUB_C;
+	localVar = 0u;
 }
 
-static void nestedStates_SF_SUB_D_entry(void)
-{
-	nestedStates_activeState = NESTEDSTATES_SUB_D;
-}
 
-static void nestedStates_SF_SUB_E_entry(void)
-{
-	nestedStates_activeState = NESTEDSTATES_SUB_E;
-}
-
-static void nestedStates_SF_SUB_F_entry(void)
-{
-	nestedStates_activeState = NESTEDSTATES_SUB_F;
-}
 
 static void nestedStates_SF_SUB_A(void)
 {
@@ -422,6 +195,14 @@ static pySm_bool nestedStates_TTF_SUB_A_to_SUB_D(void)
 	return rtrn;
 }
 
+static pySm_bool nestedStates_TTF_SUB_A_to_SUB_B(void)
+{
+	pySm_bool rtrn = (
+		 PYSM_TRUE
+		);
+	return rtrn;
+}
+
 static pySm_bool nestedStates_TTF_SUP_A_to_SUB_E(void)
 {
 	pySm_bool rtrn = (
@@ -470,10 +251,52 @@ static pySm_bool nestedStates_TTF_SUB_C_to_SUB_F(void)
 	return rtrn;
 }
 
+static pySm_bool nestedStates_TTF_SUP_A_to_SUP_E(void)
+{
+	pySm_bool rtrn = (
+		 nestedStates_inputSignals->trigger_j
+		);
+	return rtrn;
+}
+
+static pySm_bool nestedStates_TTF_SUP_F_to_SUP_G(void)
+{
+	pySm_bool rtrn = (
+		 nestedStates_inputSignals->trigger_k
+		);
+	return rtrn;
+}
+
+static pySm_bool nestedStates_TTF_SUB_J_to_SUP_D(void)
+{
+	pySm_bool rtrn = (
+		 nestedStates_inputSignals->trigger_l
+		);
+	return rtrn;
+}
+
 
 /* ========================================================================= */
 /* IMPLEMENTATION : API FUNCTIONS                                            */
 /* ========================================================================= */
+pySm_returnType NestedStates_init(void)
+{
+	nestedStates_stateStatusType stateStatusIdx;
+
+	nestedStates_activeState = NESTEDSTATES_SUP_A;
+	nestedStates_rootActiveState = NESTEDSTATES_SUP_A;
+	nestedStates_subSM_SUP_A = NESTEDSTATES_SUP_B;
+	nestedStates_subSM_SUP_B = NESTEDSTATES_SUB_A;
+
+	for(stateStatusIdx = 0u; stateStatusIdx < NESTEDSTATES_TOTAL_NUMBER_OF_STATES; stateStatusIdx)
+	{
+		nestedStates_stateStati[stateStatusIdx] = NESTEDSTATES_STATE_INACTIVE;
+	}
+
+	return PYSM_E_OK;
+}
+
+
 pySm_returnType NestedStates_mainFunction(nestedStates_inputSignalsType* swc_inputSignals,
 		nestedStates_outputSignalsType* swc_outputSignals)
 {
@@ -482,7 +305,9 @@ pySm_returnType NestedStates_mainFunction(nestedStates_inputSignalsType* swc_inp
 	nestedStates_inputSignals = swc_inputSignals;
 	nestedStates_outputSignals = swc_outputSignals;
 
-	runStateMachineResult = PySm_runStateMachine(&nestedStates_stateMachine_s);
+	/* Run state machine on model root level */
+	(void)nestedStates_runModel();
+
 	return runStateMachineResult;
 }
 
@@ -490,5 +315,173 @@ pySm_returnType NestedStates_mainFunction(nestedStates_inputSignalsType* swc_inp
 void NestedStates_getActiveState(nestedStates_activeStateType* swc_activeState)
 {
 	*swc_activeState = nestedStates_activeState;
+}
+
+pySm_returnType nestedStates_runModel(void)
+{
+	switch(nestedStates_rootActiveState)
+	{
+		case NESTEDSTATES_SUP_A:
+			/* --- Handle entry --- */
+			if(NESTEDSTATES_STATE_ACTIVE != nestedStates_stateStati[NESTEDSTATES_SUP_A])
+			{
+				ACTIVATE_STATE(NESTEDSTATES_SUP_A);
+				nestedStates_SF_SUP_A_entry();
+				/* Run sub-statemachines, if any for entering substates */
+				(void)nestedStates_runSubSM_SUP_A(NESTEDSTATES_NO_EXIT_REQUESTED);
+			}
+			/* --- Handle exiting transitions and during() executions --- */
+			else
+			{
+				if(nestedStates_TTF_SUP_A_to_SUP_C())
+				{
+					/* --- Execute TAF, if any --- */
+					/* Transition SUP_A_to_SUP_C has no TAF */
+					/* --- Run exit() of substates, if any --- */
+					(void)nestedStates_runSubSM_SUP_A(NESTEDSTATES_EXIT_REQUESTED);
+					/* --- Run exit() of active state on current level , if any --- */
+					/* SUP_A has no exit() */
+					/* --- Reset current superstate to default state --- */
+					nestedStates_rootActiveState = NESTEDSTATES_SUP_A;
+					DEACTIVATE_STATE(NESTEDSTATES_SUP_A);
+					/* --- Run exit() of and deactivate exited superstates, if any --- */
+					/* --- Deactivate superstates and reset  to  their default substates, if any --- */
+					/* --- Update target's superstates , if any --- */
+					nestedStates_rootActiveState = NESTEDSTATES_SUP_C;
+					/* --- Run entry() entered superstates and target state --- */
+					/* SUP_C has no target states */
+					nestedStates_SF_SUP_C_entry();
+					/* --- Mark recent entered states as active --- */
+					ACTIVATE_STATE(NESTEDSTATES_SUP_C);
+					/* --- Run sub-statemachines, if any for entering substates --- */
+					(void)nestedStates_runSubSM_SUP_C(NESTEDSTATES_NO_EXIT_REQUESTED);
+				}
+				else if(nestedStates_TTF_SUP_A_to_SUB_E())
+				{
+					/* TODO */
+				}
+				else if(nestedStates_TTF_SUP_A_to_SUP_E())
+				{
+					/* TODO */
+				}
+				else
+				{
+					/* Run during() of active state, if any */
+					/* Run sub-statemachines, if any for during() execution */
+					(void)nestedStates_runSubSM_SUP_A(NESTEDSTATES_NO_EXIT_REQUESTED);
+				}
+			}
+			break;
+
+		case NESTEDSTATES_RESERVED_INACTIVE_STATE:
+			break;
+	}
+	return PYSM_E_OK;
+}
+
+
+pySm_returnType nestedStates_runSubSM_SUP_A(nestedStates_exitRequestType exitRq)
+{
+	switch(nestedStates_subSM_SUP_A)
+	{
+		case NESTEDSTATES_SUP_B:
+			/* --- Handle entry --- */
+			if(NESTEDSTATES_STATE_ACTIVE != nestedStates_stateStati[NESTEDSTATES_SUP_B])
+			{
+				ACTIVATE_STATE(NESTEDSTATES_SUP_B);
+				nestedStates_SF_SUP_B_entry();
+				/* Run sub-statemachines, if any for entering substates */
+				(void)nestedStates_runSubSM_SUP_B(NESTEDSTATES_NO_EXIT_REQUESTED);
+			}
+			/* --- Handle exit --- */
+			else if(NESTEDSTATES_EXIT_REQUESTED == exitRq)
+			{
+				/* Run exit() of substates, if any */
+				(void)nestedStates_runSubSM_SUP_B(NESTEDSTATES_EXIT_REQUESTED);
+				/* Run exit() of SUP_B , if any */
+				/* Reset SUP_A state machine to default state */
+				nestedStates_subSM_SUP_A = NESTEDSTATES_SUP_B;
+				DEACTIVATE_STATE(NESTEDSTATES_SUP_B);
+			}
+			/* --- Handle exiting transitions and during() executions --- */
+			else
+			{
+				if(nestedStates_TTF_SUP_B_to_SUB_D())
+				{
+					/* --- Execute TAF, if any --- */
+					/* Transition SUP_B_to_SUB_D has no TAF */
+					/* --- Run exit() of substates, if any --- */
+					(void)nestedStates_runSubSM_SUP_B(NESTEDSTATES_EXIT_REQUESTED);
+					/* --- Run exit() of active state on current level , if any --- */
+					/* SUP_B has no exit() */
+					/* --- Reset current superstate to default state --- */
+					nestedStates_subSM_SUP_A = NESTEDSTATES_SUP_B;
+					DEACTIVATE_STATE(NESTEDSTATES_SUP_B);
+					/* --- Run exit() of and deactivate exited superstates, if any --- */
+					/* --- Deactivate superstates and reset  to  their default substates, if any --- */
+					DEACTIVATE_STATE(NESTEDSTATES_SUP_A);
+					/* --- Update target's superstates , if any --- */
+					nestedStates_subSM_SUP_D = NESTEDSTATES_SUB_D;
+					nestedStates_subSM_SUP_C = NESTEDSTATES_SUP_D;
+					nestedStates_rootActiveState = NESTEDSTATES_SUP_C;
+					/* --- Run entry() entered superstates and target state --- */
+					nestedStates_SF_SUP_D_entry();
+					nestedStates_SF_SUP_C_entry();
+					/* SUB_D has no entry () */
+					/* --- Mark recent entered states as active --- */
+					ACTIVATE_STATE(NESTEDSTATES_SUB_D);
+					ACTIVATE_STATE(NESTEDSTATES_SUP_D);
+					ACTIVATE_STATE(NESTEDSTATES_SUP_C);
+					/* --- Run sub-statemachines, if any for entering substates --- */
+					/* SUB_D has no sub-states */
+
+				}
+				else
+				{
+					/* Run during() of active state, if any */
+					/* Run sub-statemachines, if any for during() execution */
+					(void)nestedStates_runSubSM_SUP_B(NESTEDSTATES_NO_EXIT_REQUESTED);
+				}
+			}
+			break;
+
+		case NESTEDSTATES_SUB_C:
+			/* --- Handle entry --- */
+			if(NESTEDSTATES_STATE_ACTIVE != nestedStates_stateStati[NESTEDSTATES_SUB_C])
+			{
+				ACTIVATE_STATE(NESTEDSTATES_SUB_C);
+				nestedStates_SF_SUB_C_entry();
+			}
+			/* --- Handle exit --- */
+			else if(NESTEDSTATES_EXIT_REQUESTED == exitRq)
+			{
+				/* Run exit() of substates, if any */
+				/* Run exit() of SUB_C , if any */
+				/* Reset SUP_A state machine to default state */
+				nestedStates_subSM_SUP_A = NESTEDSTATES_SUP_B;
+				DEACTIVATE_STATE(NESTEDSTATES_SUB_C);
+			}
+			/* --- Handle exiting transitions and during() executions --- */
+			else
+			{
+				if(nestedStates_TTF_SUB_C_to_SUB_F())
+				{
+					/* Execute TAF, if any */
+					/* TODO */
+				}
+				else
+				{
+					/* Run during() of active state, if any */
+					nestedStates_SF_SUB_C();
+					/* Run sub-statemachines, if any for during() execution */
+				}
+			}
+			/* Run sub-statemachines, if any */
+			(void)nestedStates_runSubSM_SUP_B(NESTEDSTATES_NO_EXIT_REQUESTED);
+			break;
+
+		case NESTEDSTATES_RESERVED_INACTIVE_STATE:
+			break;
+	}
 }
 
