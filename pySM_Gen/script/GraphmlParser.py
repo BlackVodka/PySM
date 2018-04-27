@@ -56,7 +56,7 @@ cfgKw_inSigs = 'INPUT_SIGNALS'
 cfgKw_outSigs = 'OUTPUT_SIGNALS'
 
 
-def ParseGraphmlFile(self):
+def ParseGraphmlFile(self, inFile):
     """Main routine for parsing a yEd graphml file.
 
     Gets information of contained states, transitions and configuration blocks.
@@ -79,7 +79,7 @@ def ParseGraphmlFile(self):
 
     # check if given file can be opened
     try:
-        fp = open(self.txtPathToyEDInputFile.text(), 'r')
+        fp = open(inFile, 'r')
     except:
         self.logWindow(TS.LOG_WINDOW_ERROR_OPENING_YED_INPUT_FILE)
         return None
@@ -252,12 +252,16 @@ def ParseEdges(self, edges, initStateMarkerNodeId):
 
 
     for currEdge in edges:
-
-        try:
-            lines = ((((currEdge[0][0]).find(xmlns['y'] + 'EdgeLabel'))).text).split('\n')
-        except:
-            # Transition hasn't any text
-            lines = None
+        # Catch sometimes generated emty data written by yEd like <data key="d9"/> , dunno why
+        for dataSetEntry in currEdge:
+            if len(dataSetEntry) == 0:
+                continue # outer for loop
+            else:
+                try:
+                    lines = ((((dataSetEntry[0]).find(xmlns['y'] + 'EdgeLabel'))).text).split('\n')
+                except:
+                    # Transition hasn't any text
+                    lines = None
 
         transitionElem = {
             'edge_id' : (currEdge.attrib)['id'],
