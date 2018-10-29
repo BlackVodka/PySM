@@ -29,6 +29,7 @@
 /* INCLUDES                                                                  */
 /* ========================================================================= */
 #include "PySm.h"
+#include <string.h>
 
 
 /* ========================================================================= */
@@ -53,6 +54,7 @@ pySm_returnType PySm_runStateMachine(pySm_stateMachineType *stateMachine)
    pySm_uint8 numberOfTransitionsToTest_ui8 = 0u;
    pySm_bool transitionHasBeenExecuted_b = (pySm_bool)PYSM_FALSE;
 
+   memset(transitionsToTest_aui8, PYSM_INVALID_TRANSITION_NO, PYSM_MAX_NO_OF_TRANSITIONS_PER_STATE);
 
    if(stateMachine == PYSM_NULL_PTR)
    {
@@ -61,108 +63,108 @@ pySm_returnType PySm_runStateMachine(pySm_stateMachineType *stateMachine)
    else
    {
 /* Check if state is valid                                                   */
-      {
-         returnValue = PySm_checkState(stateMachine, stateMachine->actualState);
+	   returnValue = PySm_checkState(stateMachine, stateMachine->actualState);
 
-         if(returnValue == PYSM_E_OK)
-         {
+       if(returnValue == PYSM_E_OK)
+       {
 /* Check if the state machine runs the first time and we need to run an      */
 /* entry function                                                            */
 /* if/else statement here is needed to ensure a consistent behavior of the   */
 /* state machine (entry-statement gets executed in one cycle and just in the */
 /* next the during statement gets executed                                   */
-        	 if((pySm_bool)PYSM_TRUE == stateMachine->runEntryOfInitialState_b)
-        	 {
-        		 stateMachine->actualState->onEntryState();
-        		 stateMachine->runEntryOfInitialState_b = (pySm_bool)PYSM_FALSE;
-        	 }
-        	 else
-        	 {
+    	   if((pySm_bool)PYSM_TRUE == stateMachine->runEntryOfInitialState_b)
+    	   {
+    		   stateMachine->actualState->onEntryState();
+    		   stateMachine->runEntryOfInitialState_b = (pySm_bool)PYSM_FALSE;
+    	   }
+    	   else
+    	   {
 /* Run current active state, if a during()-function got generated            */
-				if(PYSM_NULL_PTR != stateMachine->actualState->onState)
-				{
-					stateMachine->actualState->onState();
-				}
-        	 }
+    		   if(PYSM_NULL_PTR != stateMachine->actualState->onState)
+    		   {
+    			   stateMachine->actualState->onState();
+    		   }
+    	   }
 /* ========================================================================= */
 /* Check for relevant transitions                                            */
 /* ========================================================================= */
-            for(transitionNo_ui8 = 0u; transitionNo_ui8 < stateMachine->numberOfTransitions; transitionNo_ui8++)
-            {
-               if(stateMachine->transitions[transitionNo_ui8].sourceState == stateMachine->actualState)
+    	   for(transitionNo_ui8 = 0u; transitionNo_ui8 < stateMachine->numberOfTransitions; transitionNo_ui8++)
+           {
+    		   if(stateMachine->transitions[transitionNo_ui8].sourceState == stateMachine->actualState)
                {
-            	   transitionsToTest_aui8[numberOfTransitionsToTest_ui8] = transitionNo_ui8;
+    			   transitionsToTest_aui8[numberOfTransitionsToTest_ui8] = transitionNo_ui8;
             	   numberOfTransitionsToTest_ui8++;
                }
-            }
+           }
 /* ========================================================================= */
 /* Execute relevant transitions                                              */
 /* Naturally, numberOfTransitionsToTest_ui8 is the total amount of           */
 /* transitions exiting the currently active state. We're going use this fact */
 /* ========================================================================= */
-            for(transitionPriority = (pySm_transitionPriorityType)1u;
+    	   for(transitionPriority = (pySm_transitionPriorityType)1u;
             		transitionPriority <= (pySm_transitionPriorityType)numberOfTransitionsToTest_ui8;
             		transitionPriority+= (pySm_transitionPriorityType)1)
-            {
+    	   {
 /* ========================================================================= */
 /* Search for transition with current checked priority (1,2,3...)            */
 /* ========================================================================= */
-            	for(transitionNo_ui8=0u; transitionNo_ui8 < numberOfTransitionsToTest_ui8; transitionNo_ui8++)
-            	{
-            		currentTransition_ui8 = transitionsToTest_aui8[transitionNo_ui8];
-            		if(stateMachine->transitions[currentTransition_ui8].transitionPriority == transitionPriority)
-					{
-/* ========================================================================= */
-/* Conditionless transitions will always evaluate to true                    */
-/* ========================================================================= */
-            			if (PYSM_NULL_PTR == stateMachine->transitions[currentTransition_ui8].transitionTest)
-            			{
-            				transitionTriggered_b = (pySm_bool)PYSM_TRUE;
-            			}
-            			else
-						{
-            				transitionTriggered_b =	stateMachine->transitions[currentTransition_ui8].transitionTest();
-						}
+    		   for(transitionNo_ui8=0u; transitionNo_ui8 < numberOfTransitionsToTest_ui8; transitionNo_ui8++)
+    		   {
+    			   currentTransition_ui8 = transitionsToTest_aui8[transitionNo_ui8];
+    			   if(PYSM_INVALID_TRANSITION_NO != currentTransition_ui8)
+    			   {
+    				   if(stateMachine->transitions[currentTransition_ui8].transitionPriority == transitionPriority)
+    				   {
+	/* ========================================================================= */
+	/* Conditionless transitions will always evaluate to true                    */
+	/* ========================================================================= */
+    					   if (PYSM_NULL_PTR == stateMachine->transitions[currentTransition_ui8].transitionTest)
+    					   {
+    						   transitionTriggered_b = (pySm_bool)PYSM_TRUE;
+    					   }
+    					   else
+    					   {
+    						   transitionTriggered_b =	stateMachine->transitions[currentTransition_ui8].transitionTest();
+    					   }
 
-						if (transitionTriggered_b == (pySm_bool)PYSM_TRUE)
-						{
-							/* Check if need to run an exit state function   */
-							if(PYSM_NULL_PTR != stateMachine->actualState->onExitState)
-							{
-								stateMachine->actualState->onExitState();
-							}
-							/* Check if need to run an transition            */
-							/* action function                               */
-							if(PYSM_NULL_PTR != stateMachine->transitions[currentTransition_ui8].transitionAction)
-							{
-								stateMachine->transitions[currentTransition_ui8].transitionAction();
-							}
-							stateMachine->actualState =	stateMachine->transitions[currentTransition_ui8].destinationState;
-							/* Check if need to run an entry state function  */
-							/* for the new state                             */
-							if(PYSM_NULL_PTR != stateMachine->actualState->onEntryState)
-							{
-								stateMachine->actualState->onEntryState();
-							}
-/* Set flag for aborting outer transition iteration for-loop                 */
-							transitionHasBeenExecuted_b = PYSM_TRUE;
-							break;
-						}
-					}
-				}
+    					   if (transitionTriggered_b == (pySm_bool)PYSM_TRUE)
+    					   {
+    						   /* Check if need to run an exit state function   */
+    						   if(PYSM_NULL_PTR != stateMachine->actualState->onExitState)
+    						   {
+    							   stateMachine->actualState->onExitState();
+    						   }
+    						   /* Check if need to run an transition            */
+    						   /* action function                               */
+    						   if(PYSM_NULL_PTR != stateMachine->transitions[currentTransition_ui8].transitionAction)
+    						   {
+    							   stateMachine->transitions[currentTransition_ui8].transitionAction();
+    						   }
+    						   stateMachine->actualState =	stateMachine->transitions[currentTransition_ui8].destinationState;
+    						   /* Check if need to run an entry state function  */
+    						   /* for the new state                             */
+    						   if(PYSM_NULL_PTR != stateMachine->actualState->onEntryState)
+    						   {
+    							   stateMachine->actualState->onEntryState();
+    						   }
+	/* Set flag for aborting outer transition iteration for-loop                 */
+    						   transitionHasBeenExecuted_b = PYSM_TRUE;
+    						   break;
+    					   }
+    				   }
+    			   }
+    		   }
 
 /* ========================================================================= */
 /* Abort outer for loop as soon as a transition condition was true           */
 /* ========================================================================= */
-            	if(PYSM_TRUE == transitionHasBeenExecuted_b)
-            	{
-            		break;
-            	}
-			}
-		}
-
-	 }
-  }
+    		   if(PYSM_TRUE == transitionHasBeenExecuted_b)
+    		   {
+    			   break;
+    		   }
+    	   }
+       }
+   }
    return returnValue;
 }
 

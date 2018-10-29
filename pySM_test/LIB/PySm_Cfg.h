@@ -42,6 +42,8 @@
 
 /** @brief Number of maximum allowed in-/outgoing transitions per state */
 #define PYSM_MAX_NO_OF_TRANSITIONS_PER_STATE 10u
+/** @brief Number for an invalid/uninitialized transition */
+#define PYSM_INVALID_TRANSITION_NO 0xFF
 
 
 

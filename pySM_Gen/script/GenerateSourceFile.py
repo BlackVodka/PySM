@@ -115,7 +115,7 @@ def GenerateSourceFile(self, states, transitions, config):
     if listOfTafObjects is not None:
         WriteTafFunctions(self, cFile, listOfTafObjects)
     # Write implementation of API functions
-    WriteApiFunctions(self, cFile, config)
+    WriteApiFunctions(self, cFile, config, states)
     
     
     cFile.close()
@@ -447,8 +447,15 @@ def WriteTafFunctions(self, cFile, tafs):
     cFile.write('\n')
     return
 
-def WriteApiFunctions(self, cFile, config):
+def WriteApiFunctions(self, cFile, config, states):
     SM_name = self.txtStateMachineName.text()
+    
+        # Find init state
+    initState = None
+    for state in states:
+        if state['is_init_state']:
+            initState = state['state_name']
+            break
     
     cFile.write(GEN.GENERATED_FILE_SOURCE_API_IMPLEMENTATION_HEADING + '\n')
     # State machine main function
@@ -482,6 +489,15 @@ def WriteApiFunctions(self, cFile, config):
     cFile.write('void ' + SM_name[0].upper() + SM_name[1:] + '_getActiveState(' + SM_name + '_' + Cfg.lib_activeStateType + '* swc_activeState' + ')\n')
     cFile.write('{\n')
     cFile.write('\t' + '*swc_activeState = ' + SM_name + '_activeState' + ';\n')
+    cFile.write('}\n\n')
+    
+        # Reset function for the state machine
+    ##########################################
+    cFile.write('void ' + SM_name[0].upper() + SM_name[1:] + '_resetStateMachine(void)\n')
+    cFile.write('{\n')
+    cFile.write('\t' + SM_name[0].upper() + SM_name[1:] + '_stateMachine_s.actualState = &' + SM_name + '_state_' + initState + ';\n')
+    cFile.write('\t' + SM_name[0].upper() + SM_name[1:] + '_stateMachine_s.runEntryOfInitialState_b = PYSM_TRUE' + ';\n')
+    cFile.write('\t' + SM_name[0].upper() + SM_name[1:] + '_variableResetFunction()' + ';\n')
     cFile.write('}\n\n')
     
     return

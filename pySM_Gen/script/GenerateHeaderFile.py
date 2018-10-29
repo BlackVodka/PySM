@@ -196,6 +196,9 @@ def WriteHeaderApiDeclaration(self, hFile, config):
     
     hFile.write(GEN.GENERATED_FILE_HEADER_DOXYGEN_GET_CURRENT_STATE.format(SM_name) + '\n')
     hFile.write('void ' + SM_name[0].upper() + SM_name[1:] + '_getActiveState(' + SM_name + '_activeStateType*' + ');\n\n')
+    
+    hFile.write(GEN.GENERATED_FILE_HEADER_DOXYGEN_RESET_STATE_MACHINE.format(SM_name) + '\n')
+    hFile.write('void ' + SM_name[0].upper() + SM_name[1:] + '_resetStateMachine(void);\n\n')
 
     return
 

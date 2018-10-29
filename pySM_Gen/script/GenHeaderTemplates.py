@@ -91,6 +91,12 @@ GENERATED_FILE_HEADER_DOXYGEN_GET_CURRENT_STATE = \
  * @brief Main function of the state machine
  * {}
 */"""
+GENERATED_FILE_HEADER_DOXYGEN_RESET_STATE_MACHINE = \
+"""
+/**
+ * @brief Reset function of the  state machine
+ * {}
+*/"""
 GENERATED_FILE_HEADER_ENDING = \
 """
 #endif /* {}_H_ */
